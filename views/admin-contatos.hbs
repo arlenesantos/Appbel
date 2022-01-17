@@ -1,0 +1,97 @@
+<section class="container mt-5 pt-5">
+    <h1 class="display-4 text-center">Admin - Contatos</h1>
+    <hr>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Motivo</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Mensagem</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Excluir</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each contatos}}
+                <tr>
+                    <td>{{inc @index}}</td>
+                    <td>{{this.data}}</td>
+                    <td>{{this.motivo_contato}}</td>
+                    <td>{{this.nome}}</td>
+                    <td>{{this.telefone}}</td>
+                    <td>{{this.email}}</td>
+                    <td>{{this.mensagem}}</td>
+                    <td class="mx-auto">
+                        <input class="form-check-input btn btn-outline-success btn-lg" type="checkbox"
+                            id="flexCheckDefault" {{#if this.status}} checked {{/if}}
+                            onclick="changeStatus('{{this.email}}', this)" value="1">
+                        <label class="form-check-label" for="flexCheckDefault"></label>
+                    </td>
+                    <td class="mx-auto">
+                        <button id="eliminarMensagem" type="button" class="btn btn-danger btn-sm"
+                            onclick="excluirMsg('{{this.email}}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z">
+                                </path>
+                            </svg></button>
+                    </td>
+                </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+    </div>
+
+</section>
+
+<script>
+
+    //atualizar status da mensagem/contato
+    const changeStatus = async (email, e) => {
+        let status = e.checked;
+
+        fetch("/api/admin-contatos", {
+            method: "PUT",
+            body: JSON.stringify({ email, status }),
+            headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+            },
+        }).then(res => res.json()).then(data => {
+            alert(status
+                ? "Contato respondido"
+                : "Contato ainda não respondido"
+            );
+            location.href = "/admin-contatos"
+
+        }).catch(error => console.log(error))
+    };
+
+
+    //excluir contato/mensagem
+    const excluirMsg = async (email) => {
+        fetch("/api/admin-contatos", {
+            method: "DELETE",
+            body: JSON.stringify({ email }),
+            headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+            },
+        }).then(res => res.json()).then(data => {
+            alert("Mensagem excluída com sucesso.");
+            location.href = "/admin-contatos";
+
+        }).catch(error => console.log(error))
+    };
+
+   
+
+
+</script>

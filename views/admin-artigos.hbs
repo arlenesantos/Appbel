@@ -1,0 +1,86 @@
+<section id="artigo" class="py-5">
+    <div class="container">
+
+        <div>
+            <form class="row mt-5 py-5" action="/admin-artigo">
+                <input type="hidden" name="id" id="id" {{#if artigo}} value="{{artigo.id}}" {{/if}}>
+                <div class="mb-3">
+                    <label for="data" class="form-label">Data de publicação</label>
+                    <input type="date" class="form-control" id="data" name="data" required {{#if artigo }}
+                        value="{{artigo.data}}" {{/if}}>
+                </div>
+                <div class="mb-3">
+                    <label for="titulo" class="form-label">Título do artigo</label>
+                    <input type="text" class="form-control" id="titulo" name="titulo" required {{#if artigo }}
+                        value="{{artigo.titulo}}" {{/if}}>
+                </div>
+                <div class="mb-3">
+                    <label for="conteudo" class="form-label">Conteúdo do artigo</label>
+                    <textarea class="form-control" rows="3" name="conteudo" id="conteudo"
+                        placeholder="Digite o conteúdo do novo artigo!"
+                        required>{{#if artigo }} {{artigo.conteudo}} {{/if}}</textarea>
+                </div>
+
+                {{#if artigo }}
+                <div class="d-grid gap-2">
+                    <button id="editarArtigo" type="submit" class="btn btn-outline-success">Editar artigo!</button>
+                </div>
+                {{else }}
+                <div class="d-grid gap-2">
+                    <button id="criarArtigo" type="submit" class="btn btn-outline-success">Publicar artigo!</button>
+                </div>
+                {{/if}}
+
+            </form>
+        </div>
+
+    </div>
+</section>
+<script>
+
+    // front end para criar artigo, envia no body os dados do formulario e recebe do back end resultado para resolver a promessa - dados para salvar na bd e token para redirecionar a página: 
+
+    const escreverArtigo = async (metodo, mensagem) => {
+
+        const id = document.getElementById("id").value;
+        const data = document.getElementById("data").value;
+        const titulo = document.getElementById("titulo").value;
+        const conteudo = document.getElementById("conteudo").value;
+
+        fetch("/api/admin-artigo", {
+            method: metodo,
+            body: JSON.stringify({ id, data, titulo, conteudo }),
+            headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+            },
+        }).then(res => res.json()).then(data => {            
+            const token = data.token;
+            if(data.code === 401){
+                alert("Acesso negado.");
+                localStorage.clear();
+                location.href = `/login`;
+            } else {
+                alert(mensagem);
+                location.href = `/admin-blog`;
+            }
+        }).catch(error => console.log(error))
+    };
+
+    const criar = document.getElementById('criarArtigo');
+    if (criar) {
+        criar.addEventListener("click", async (e) => {
+            e.preventDefault();
+            escreverArtigo('POST', 'Artigo criado com sucesso.');
+        })
+    };
+
+    const editar = document.getElementById('editarArtigo');
+    if (editar) {
+        editar.addEventListener("click", async (e) => {
+            e.preventDefault();
+            escreverArtigo('PUT', 'Artigo editado com sucesso.');
+        })
+    };
+
+</script>

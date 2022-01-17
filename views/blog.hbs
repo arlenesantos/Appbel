@@ -1,0 +1,36 @@
+<section class="container position-relative my-5" id="blog">
+    <div> 
+        {{#each artigos}}       
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">                    
+                <img src="../img/csl-1.jpg" class="img-fluid card-img-top" alt="">                
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h1 class="card-title h3 mb-0">{{this.titulo}}</h1>
+                        <div class="mb-1 text-muted">{{this.data}}</div>
+                        <p class="card-text">{{this.conteudo}}</p>
+                        <a href="/blog-artigo?id={{this.id}}">Continue lendo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>   
+
+    <div class="archives">
+        <aside class="d-none d-md-block">
+            <h4 class="fst-italic">Arquivos</h4>
+            <ol class="list-unstyled mb-0">
+                <li><a href="#">Março 2021</a></li>
+                <li><a href="#">Fevereiro 2021</a></li>
+                <li><a href="#">Janeiro 2021</a></li>
+                <li><a href="#">Dezembro 2020</a></li>
+                <li><a href="#">Novembro 2020</a></li>
+                <li><a href="#">Outubro 2020</a></li>
+                <li><a href="#">Setembro 2020</a></li>
+                <li><a href="#">Agosto 2020</a></li>
+            </ol>
+        </aside>
+    </div>
+    
+</section>

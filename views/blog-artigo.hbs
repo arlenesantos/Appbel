@@ -1,0 +1,27 @@
+<section class="container my-5" id="blog-artigo">
+    <article>
+        <div>
+            <img src="../img/csl-2.jpg" class="img-fluid card-img-top" alt="">
+        </div>
+        <div>
+            {{#if artigo.id}}
+            <h1> {{artigo.titulo}}</h1>
+            <p class="mb-1 text-muted">{{artigo.data}}</p>
+            <p>{{artigo.conteudo}}</p>
+        </div>
+        <div>
+            <a href="/blog-artigo?id={{dec artigo.id}}">Anterior</a>
+            <a href="/blog-artigo?id={{inc artigo.id}}">Próximo</a>           
+        </div>
+        {{else}}
+        <p>Ops artigo não encontrado. <a href="/blog" class="text-decoration-none text-secondary">Clique aqui para voltar!</a></p> 
+        {{/if}}
+
+    </article>
+
+
+</section>
+
+<script>
+    const moment = require('moment');
+</script>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Cone hindu, cone fitoterápico, fitoterapia, cone, plantas medicinais, terapia">
+    <meta name="description"
+        content="Appbel distribui cones fitoterápicos para atacado e varejo. Os cones são feitos artesanalmente para extrair todo o pontencial da fitoterapia.">
+
+    <!-- Bootstrap v.5.1 e CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!-- Favicons -->
+    <script src="https://kit.fontawesome.com/8cbe84e1e9.js" crossorigin="anonymous"></script>
+
+    <title>Appbel</title>
+
+</head>
+
+<body>
+    <header class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+        <nav class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="img\logo-removebg.png" alt="logo" style="width: 40%;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul id="ul-admin" class="navbar-nav flex-row flex-wrap ms-md-auto">
+                    <li class="nav-item">
+                        <a id="adminprodutos" class="nav-link active" aria-current="page"
+                            href="/admin-produtos">Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="adminparceiros" class="nav-link" href="/admin-parceiros">Parceiros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="admincontatos" class="nav-link" href="/admin-contatos">Contatos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="adminblog" class="nav-link" href="/admin-blog">Blog</a>
+                    </li>
+                    <!--
+                    <li class="nav-item">
+                        <a id="logout" class="nav-link" href="/login">Sair</a>
+                    </li> -->
+                    {{#if logged}}
+                    <li class="nav-item">
+                        <a id="logout" class="nav-link" href="/login">Sair</a>
+                    </li>
+                    {{/if}}
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        {{{ body }}}
+    </main>
+
+
+
+    <footer class="align-items-center border-top w-100 text-center">
+        <div>
+            <ul class="redes-sociais text-center">
+                <li><a href="#"><i class="fab fa-facebook text-success"></i></a></li>
+                <li><a href="#"><i class="fab fa-twitter text-success"></i></a></li>
+                <li><a href="#"><i class="fab fa-instagram text-success"></i></a></li>
+            </ul>
+        </div>
+
+        <p class="col-md-4 mb-0 text-muted d-inline">© 2021 Todos os diretos reservados</p>
+    </footer>
+
+</body>
+
+</html>
+
+<script>
+
+    //logout:    
+    const logout = document.getElementById('logout');
+    logout.addEventListener("click", () => {
+        fetch("/login", {
+            method: "DELETE",
+        })
+            .then(res => res.json()).then(data => {
+                localStorage.clear();
+                window.location.href = `/login`;
+            })
+            .catch(error => console.log(error));             
+        
+    });
+
+
+</script>
