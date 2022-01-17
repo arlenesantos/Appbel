@@ -16,9 +16,9 @@
                 </div>
                 <div class="mb-3">
                     <label for="conteudo" class="form-label">Conteúdo do artigo</label>
-                    <textarea class="form-control" rows="3" name="conteudo" id="conteudo"
+                    <textarea class="form-control reticencias" name="conteudo" id="editor"
                         placeholder="Digite o conteúdo do novo artigo!"
-                        required>{{#if artigo }} {{artigo.conteudo}} {{/if}}</textarea>
+                        required>{{#if artigo }} {{{artigo.conteudo}}} {{/if}}</textarea>
                 </div>
 
                 {{#if artigo }}
@@ -34,18 +34,31 @@
             </form>
         </div>
 
+        
+
     </div>
 </section>
+
+
+
+
 <script>
 
-    // front end para criar artigo, envia no body os dados do formulario e recebe do back end resultado para resolver a promessa - dados para salvar na bd e token para redirecionar a página: 
+    //CKEditor
+    let editor;
 
+    ClassicEditor
+    .create( document.querySelector( '#editor' ) )
+    .then( newEditor => editor = newEditor)
+    .catch( error => console.error( error ));
+
+  
     const escreverArtigo = async (metodo, mensagem) => {
 
         const id = document.getElementById("id").value;
         const data = document.getElementById("data").value;
         const titulo = document.getElementById("titulo").value;
-        const conteudo = document.getElementById("conteudo").value;
+        const conteudo = editor.getData();
 
         fetch("/api/admin-artigo", {
             method: metodo,
@@ -54,9 +67,9 @@
                 'Content-Type': 'application/json',
                 'token': localStorage.getItem('token')
             },
-        }).then(res => res.json()).then(data => {            
+        }).then(res => res.json()).then(data => {
             const token = data.token;
-            if(data.code === 401){
+            if (data.code === 401) {
                 alert("Acesso negado.");
                 localStorage.clear();
                 location.href = `/login`;
@@ -82,5 +95,8 @@
             escreverArtigo('PUT', 'Artigo editado com sucesso.');
         })
     };
+
+
+
 
 </script>

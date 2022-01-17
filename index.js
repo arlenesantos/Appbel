@@ -44,6 +44,8 @@ app.use(session({
 app.use(express.static(__dirname + "/assets"));
 app.use('/css', express.static(__dirname + "/node_modules/bootstrap/dist/css"));
 app.use('/js', express.static(__dirname + "/node_modules/bootstrap/dist/js"));
+app.use('/ckeditor', express.static(__dirname + "/node_modules/@ckeditor/ckeditor5-build-classic/build"));
+
 
 app.listen(3000, () => console.log("server on"));
 

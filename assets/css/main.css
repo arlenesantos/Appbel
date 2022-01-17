@@ -9,6 +9,7 @@
     margin-top: 100px;
 }
 
+
 .bn-header{
     margin-top: 75px;
 }
@@ -23,6 +24,7 @@
     top:0;
     right:-100px;       
 }
+
 
 
 .redes-sociais li {
@@ -44,6 +46,16 @@
     background-color: #198754;
        
 }
+
+.reticencias{
+    width: 500px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	white-space: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+  }
 
 
 
