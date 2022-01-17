@@ -84,7 +84,7 @@ const verificarAdmin = async (email, senha) => {
 
 const consultarArtigos = async () => {
     try {
-        const resultado = await pool.query(`SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, titulo, conteudo FROM artigos;`);
+        const resultado = await pool.query(`SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, titulo, imagem, conteudo FROM artigos;`);
         return resultado.rows;
 
     } catch (error) {
@@ -92,10 +92,10 @@ const consultarArtigos = async () => {
     }
 };
 
-const criarArtigo = async (data, titulo, conteudo) => {
+const criarArtigo = async (data, titulo, imagem, conteudo) => {
     const consulta = {
-        text: `INSERT INTO artigos (data, titulo, conteudo) VALUES ($1, $2, $3) RETURNING *;`,
-        values: [data, titulo, conteudo]
+        text: `INSERT INTO artigos (data, titulo, imagem, conteudo) VALUES ($1, $2, $3, $4) RETURNING *;`,
+        values: [data, titulo, imagem, conteudo]
     }
     try {
         const resultado = await pool.query(consulta);
@@ -108,8 +108,8 @@ const criarArtigo = async (data, titulo, conteudo) => {
 
 const consultarArtigo = async (id, dataPtBR = false) => {
     const query = dataPtBR 
-        ? `SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, titulo, conteudo FROM artigos WHERE id = $1;` 
-        : `SELECT id, data, titulo, conteudo FROM artigos WHERE id = $1;`;
+        ? `SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, titulo, imagem, conteudo FROM artigos WHERE id = $1;` 
+        : `SELECT id, data, titulo, imagem, conteudo FROM artigos WHERE id = $1;`;
         
     try {
         const consulta = {
@@ -124,10 +124,10 @@ const consultarArtigo = async (id, dataPtBR = false) => {
     }
 };
 
-const editarArtigo = async (id, data, titulo, conteudo) => {
+const editarArtigo = async (id, data, titulo, imagem, conteudo) => {
     const consulta = {
-        text: `UPDATE artigos SET data = $2, titulo = $3, conteudo = $4 WHERE id = $1 RETURNING *;`,
-        values: [id, data, titulo, conteudo]
+        text: `UPDATE artigos SET data = $2, titulo = $3, imagem = $4, conteudo = $5 WHERE id = $1 RETURNING *;`,
+        values: [id, data, titulo, imagem, conteudo]
     }
     try {
         const resultado = await pool.query(consulta);

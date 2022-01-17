@@ -310,8 +310,8 @@ app.post("/api/admin-artigo", async (req, res) => {
                         code: 401
                     })
                 } else {
-                    const { data, titulo, conteudo } = req.body;
-                    const artigoNovo = await criarArtigo(data, titulo, conteudo);
+                    const { data, titulo, imagem, conteudo } = req.body;
+                    const artigoNovo = await criarArtigo(data, titulo, imagem, conteudo);
                     res.status(200).type("json").send({ 'artigo': artigoNovo, 'token': token });
                 }
             })
@@ -338,8 +338,8 @@ app.put("/api/admin-artigo", async (req, res) => {
                         code: 401
                     })
                 } else {
-                    const { id, data, titulo, conteudo } = req.body;
-                    const artigoEditado = await editarArtigo(id, data, titulo, conteudo);
+                    const { id, data, titulo, imagem, conteudo } = req.body;
+                    const artigoEditado = await editarArtigo(id, data, titulo, imagem, conteudo);
                     //envia codigo 200 para entrar no then da promessa - (artigos.hbs) e então roda alert e location.href
                     res.status(200).type("json").send({ 'artigo': artigoEditado, 'token': token });
                 }

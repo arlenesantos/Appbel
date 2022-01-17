@@ -1,10 +1,10 @@
 <section class="container my-5" id="blog-artigo">
     <article>
+        {{#if artigo.id}}
         <div class="text-center my-5">
-            <img src="../img/csl-2.jpg" class="img-fluid card-img-top w-75" alt="">
+            <img src="{{artigo.imagem}}" class="img-fluid card-img-top w-75" alt="">
         </div>
-        <div>
-            {{#if artigo.id}}
+        <div>            
             <h1> {{artigo.titulo}}</h1>
             <p class="mb-1 text-muted">{{artigo.data}}</p>
             <div>{{{artigo.conteudo}}}</div>

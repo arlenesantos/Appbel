@@ -24,7 +24,8 @@ CREATE TABLE artigos (
     id SERIAL PRIMARY KEY,
     data DATE,
     titulo VARCHAR(50) NOT NULL,
+    imagem TEXT,
     conteudo TEXT NOT NULL    
 );
 
---  INSERT INTO artigos (data, titulo, conteudo) VALUES (current_date, 'titulo teste', 'conteudo teste');
+--  INSERT INTO artigos (data, titulo, imagem, conteudo) VALUES (current_date, 'titulo teste', 'https://image.freepik.com/fotos-gratis/close-up-terapeuta-usando-vela-no-ouvido_23-2148882174.jpg', 'conteudo teste');

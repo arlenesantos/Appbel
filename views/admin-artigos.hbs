@@ -15,6 +15,10 @@
                         value="{{artigo.titulo}}" {{/if}}>
                 </div>
                 <div class="mb-3">
+                    <label for="imagem" class="form-label">Imagem</label>
+                    <input type="text" class="form-control" id="imagem" name="imagem" placeholder="Digite aqui a URL da imagem a carregar na página do artigo" {{#if artigo }} value="{{artigo.imagem}}" {{/if}}>
+                </div>
+                <div class="mb-3">
                     <label for="conteudo" class="form-label">Conteúdo do artigo</label>
                     <textarea class="form-control reticencias" name="conteudo" id="editor"
                         placeholder="Digite o conteúdo do novo artigo!"
@@ -58,11 +62,12 @@
         const id = document.getElementById("id").value;
         const data = document.getElementById("data").value;
         const titulo = document.getElementById("titulo").value;
+        const imagem = document.getElementById("imagem").value;
         const conteudo = editor.getData();
 
         fetch("/api/admin-artigo", {
             method: metodo,
-            body: JSON.stringify({ id, data, titulo, conteudo }),
+            body: JSON.stringify({ id, data, titulo, imagem, conteudo }),
             headers: {
                 'Content-Type': 'application/json',
                 'token': localStorage.getItem('token')
