@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Appbel</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Keywords" content="Cone hindu, cone fitoterápico, fitoterapia, cone, plantas medicinais, terapia">
+    <meta name="Description" content="Appbel distribui cones fitoterápicos para atacado e varejo. Os cones são feitos artesanalmente para extrair todo o pontencial da fitoterapia.">
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/icon/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet">
+
+    <script src="js/main.js">  
+    </script>
+
+</head>
+<body>
+    <div class="container">
+    <nav class="nav">
+        <div class="logo-icon">
+            <img src="images/logo-icon.PNG" alt="logo Appbel ícone">
+            <span id="container-menu" onclick="menu()" class="icon-menu"></span>
+        </div>
+        <div id="menu" class="menu-mobile menu menu-pc">
+            <ul>
+                <li><a href="index.html">Produtos</a></li>
+                <li><a href="parceiros.html">Parceiros</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="blog.html">Blog</a></li>
+            </ul>
+        </div>
+    </nav>
+        <header class="header flex-container">  
+         
+            <div class="logo-Appbel">
+                <img src="images/logo.PNG" alt="logotipo Appbel" class="logo">    
+            </div>
+
+            <div class="banner">
+                <div class="banner-container">
+                <p>Trabalhamos com atacado e varejo. <br> Conheça nossos produtos e seja nosso parceiro!</p>
+                    
+                <button class="button-parceiros"><a href="contato.html">Seja um Parceiro Appbel!</a></button>
+                <!--link para página contatos com opção previamente selecionada-->
+                </div>
+            </div>
+        
+    </header>
+
+    <main class="main">
+        <section>
+                <h1>Você já conhece nossa linha de cones fitoterápicos?</h1>
+                    <p>Cada princípio ativo de nossos cones potencializam o resultado para tratar a necessidade de quem busca os nossos produtos. </p>
+                    <p>Atualmente trabalhamos com duas linhas de cones: a Linha Queridíssimos e a Linha Poderosos.</p>
+                    <p>Nossa Linha Queridíssimos, potencializada pelas propriedades do Alecrim, da Camomila e do Açafrão, atua no <strong>tratamento de ansiedade e relaxamento</strong> e é indicada para quem busca clareza mental e bem-estar. </p>
+                    <p>Já a Linha Poderosos, potencializada pelas propriedades do Alho, do Cravo da Índia e da Própolis Bruta, é indicada para o <strong>tratamento de infecções severas no ouvido, sinusite, rinite, zumbido, entre outras doenças crônicas</strong>.</p>
+        </section>
+
+        <section>
+            <article class="article">
+            <h2>Linha Queridíssimos</h2>
+            <div class="products">
+                <div class="img-cone">
+                    <img src="images/cones.jpg" alt="cone hindu">
+                </div>
+                <div class="price">
+                    <p>Atacado - R$ 18,00 o par</p>
+                    <p>Varejo - R$ 25,00 o par</p>
+                    <button onclick="showModal('texto-propriedades-Q')" class="button-saiba-mais hide">Saiba Mais</button>
+                    <button class="buy-button"><a href="contato.html">Comprar!</a></button>
+                </div>
+            </div>
+            <div id="texto-propriedades-Q" class="texto-propriedades-Q">
+                    <button onclick="hideModal('texto-propriedades-Q')" class="fechar-modal hide">X</button>
+                    <article class="article-modal">
+                    <h3>Cone de Açafrão</h3>
+                    <p>O Açafrão é a erva que carrega o poder da verdade.</p>
+                    <ul>
+                        <li>O cone de acafrão é indicado para ser utilizado em pessoas que precisam tomar grandes decisões</li>
+                        <li>Traz clareza mental</li>
+                        <li>Traz senso de direção</li>
+                        <li>Auxilia a ter boas práticas na vida, pois induz a boas condutas</li>
+                        <li>Traz ética</li>
+                        <li>Diminui a necessidade de mentir</li>
+                    </ul>
+                    </article>
+                    <article class="article-modal">
+                    <h3>Cone de Alecrim</h3>
+                    <p>O Alecrim é conhecido como a erva da alegria pois ele promove bem estar e acalma!</p>
+                    <ul>
+                        <li>O cone de alecrim é indicado para ser utilizado em pessoas ansiosas</li>
+                        <li>Auxilia no tratamento de depressão</li>
+                        <li>Combate o stress</li>
+                        <li>Alivia tosse, gripe e asma</li>
+                        <li>Estimula o fluxo sanguineo</li>
+                        <li>Possui propriedades antioxidantes e é essencial para o sistema nervoso.</li>
+                    </ul>
+                    </article>
+                    <article id="last-article-Q" class="article-modal">
+                        <h3>Cone de Camomila</h3>
+                        <p>A Camomila possui propriedades calmantes e sedativas.</p>
+                        <ul>
+                            <li> O cone de camomila é indicado para pessoas que sofrem de crises de ansiedade e insonia e com pico de stress elevado.</li>
+                            <li>Ajuda a diminuir picos de ansiedade</li>
+                            <li>Ajuda a combater bacterias</li>
+                            <li>Aumenta a imunidade</li>
+                            <li>Proporciona relaxamento profundo</li>
+                        </ul>
+                    </article>
+            </div>
+
+            </article>
+
+            <article class="article">
+                <h2>Linha Poderosos</h2>
+                <div class="products">
+                    <div class="img-cone">
+                        <img src="images/cones.jpg" alt="cone hindu">
+                    </div>
+                    <div class="price">
+                        <p>Atacado - R$ 18,00 o par</p>
+                        <p>Varejo - R$ 25,00 o par</p>
+                        <button onclick="showModal('texto-propriedades-P')" class="button-saiba-mais hide">Saiba Mais</button>
+                        <button class="buy-button"><a href="contato.html">Comprar!</a></button>
+                    </div>
+                </div>
+                <div id="texto-propriedades-P" class="texto-propriedades-P">
+                    <button onclick="hideModal('texto-propriedades-P')" class="fechar-modal hide">X</button>
+                    <article class="article-modal">
+                        <h3>Cravo da Índia</h3>
+                            <p>O Cravo da India possui propriedades antissépticas e cicatrizante.</p>
+                            <ul>
+                                <li>O cone de cravo é indicado para tratar infecções</li>
+                                <li>Tem ação antisséptica</li>
+                                <li>É anti-inflamatório e antioxidante</li>
+                                <li>Reduz sintomas de inflamação</li>
+                                <li>Muito indicado em casos de infecções agravadas por sinusite</li>
+                            </ul>
+                    </article>
+
+                    <article class="article-modal">
+                        <h3>Cone de Própolis</h3>
+                        <p>O Própolis é um antibiótico natural. Age diretamente sobre o virus da gripe.</p>
+                        <ul>
+                            <li>Possui efeito antibacteriano</li>
+                            <li>Ajuda a melhorar gripe forte</li>
+                            <li>Alivia dores de cabeça</li>
+                            <li>É cicatrizante em caso de ferimentos no ouvido</li>
+                            <li>Ajuda a aliviar tosses irritadiça e catarro</li>
+                            <li>Ajuda a tratar sinusite fortemente atacada</li>
+                        </ul>
+                    </article>
+
+                    <article id="last-article-P" class="article-modal">
+                        <h3>Cone de Alho</h3>    
+                        <p>O Alho é um antibiótico e um potente analgésico que pode ser usado para aliviar fortes dores de ouvido.</p>
+                            <ul>
+                                <li>Possui poderosas propriedades antissépticas, antivirais, e antifúngicas</li>
+                                <li>Alivia fortes dores de ouvido</li>
+                                <li>Trata inflamações graves</li>
+                                <li>Em caso de otite é o cone mais indicado para o tratamento</li>
+                            </ul>
+                    </article>
+                </div>
+  
+            </article>              
+        </section>
+    </main>
+
+    <footer class="footer blog-fulltext">
+        <div class="redes-sociais">
+            <ul class="redes-sociais">
+                <li><a href="#"><span class="icon-facebook2"></span></a></li>
+                <li><a href="#" ><span class="icon-twitter"></span></a></li>
+                <li><a href="#"><span class="icon-instagram"></span></a></li>
+            </ul>
+
+        </div>
+        
+        <div class="flexcontainer-footer">
+        <div class="logo-container">
+            <img src="images/logo-transp.png" alt="logo Appbel" class="logo-footer">
+        </div>
+
+        <div class="quem-somos">
+            <p>Quem somos</p>
+            <p>Trabalhamos com atacado e varejo. Além de atender a nossos consumidores diretos, fornecemos cones para casas de produtos naturais, de Curitiba e de Campo Largo, farmácias de homeopatia e espaços terapêuticos. Trabalhamos também com revendedores.</p> 
+            <p>Conheça nossos produtos e seja nosso parceiro!</p>                        
+        </div>         
+    </div>
+    <div class="bottom-footer">
+        <p>Todos os direitos reservados.</p>
+    </div>  
+</footer>
+
+</div>
+
+</body>
+</html>
