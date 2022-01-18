@@ -4,23 +4,29 @@
         <div class="text-center my-5">
             <img src="{{artigo.imagem}}" class="img-fluid card-img-top w-75" alt="">
         </div>
-        <div>            
+        <div>
             <h1> {{artigo.titulo}}</h1>
-            <p class="mb-1 text-muted">{{artigo.data}}</p>
+            <p class="mb-1 text-muted">{{artigo.data}}</p><br>
             <div>{{{artigo.conteudo}}}</div>
         </div>
-        <div>
-            <a href="/blog-artigo?id={{dec artigo.id}}">Anterior</a>
-            <a href="/blog-artigo?id={{inc artigo.id}}">Próximo</a>           
-        </div>
+        <div class="mt-5">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="/blog-artigo?id={{dec artigo.id}}">Anterior</a>
+                    </li>                    
+                    <li class="page-item">
+                        <a class="page-link" href="/blog-artigo?id={{inc artigo.id}}">Próximo</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>        
         {{else}}
-        <p>Ops artigo não encontrado. <a href="/blog" class="text-decoration-none text-secondary">Clique aqui para voltar!</a></p> 
+        <p>Ops artigo não encontrado. <a href="/blog" class="text-decoration-none text-secondary">Clique aqui para
+                voltar!</a></p>
         {{/if}}
 
     </article>
 
 
 </section>
-
-
-   

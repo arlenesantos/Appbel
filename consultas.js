@@ -108,8 +108,9 @@ const criarArtigo = async (data, titulo, imagem, conteudo) => {
 
 const consultarArtigo = async (id, dataPtBR = false) => {
     const query = dataPtBR 
-        ? `SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, titulo, imagem, conteudo FROM artigos WHERE id = $1;` 
-        : `SELECT id, data, titulo, imagem, conteudo FROM artigos WHERE id = $1;`;
+        ? `SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, titulo, imagem, conteudo FROM artigos WHERE id = $1;`        
+        : `SELECT id, data, titulo, imagem, conteudo 
+            FROM artigos WHERE id = $1;`;
         
     try {
         const consulta = {

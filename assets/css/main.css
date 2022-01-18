@@ -11,6 +11,7 @@
     margin-top: 100px;
 }
 
+
 .logo-img{
     padding: 10px 0 0 15px;
 }
@@ -23,15 +24,6 @@
 .btn-parceiro{
     font-size: 2em;
 }
-
-.archives{
-    padding: 0 10px;
-    position: absolute;
-    top:0;
-    right:-100px;       
-}
-
-
 
 .redes-sociais li {
     display: inline-block;
@@ -54,7 +46,7 @@
 }
 
 .reticencias{
-    width: 500px;
+    max-width: 340px;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 3;
