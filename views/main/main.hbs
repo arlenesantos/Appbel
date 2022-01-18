@@ -27,8 +27,8 @@
 <body>
     <header class="navbar navbar-expand-md navbar-light bg-light fixed-top">
         <nav class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="img/min-logo-removebg.png" alt="logo" style="width: 60%;">
+            <a class="navbar-brand" href="/">
+                <img src="img/min-logo-removebg.png" alt="logo" class="w-75 logo-img">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,17 +54,17 @@
     </header>
 
     <main>
-        <section id="carousel">
-            <div id="carouselInterval" class="carousel slide my-5" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active" data-bs-interval="5000">
-                        <img src="img/csl-1.jpg" class="d-block w-100" alt="imagem de cone hindu">
+        <section id="carousel" class="d-block d-lg-none">
+            <div id="carouselInterval" class=" row carousel carousel-dark slide my-5 bg-light" data-bs-ride="carousel">
+                <div class="col-8 mx-auto col-md-4 order-md-2 col-lg-5 align-middle text-center carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="3000">
+                        <img src="img/csl-1.jpg" class="d-block w-75 mx-auto" alt="imagem de cone hindu">
                     </div>
-                    <div class="carousel-item" data-bs-interval="5000">
-                        <img src="img/banner.JPG" class="d-block w-100" alt="imagem de cone hindu">
+                    <div class="carousel-item" data-bs-interval="3000">
+                        <img src="img/banner.JPG" class="d-block w-75 mx-auto" alt="imagem de cone hindu">
                     </div>
                     <div class="carousel-item">
-                        <img src="img/csl-3.jpg" class="d-block w-100" alt="imagem de cone hindu">
+                        <img src="img/csl-3.jpg" class="d-block w-75 mx-auto" alt="imagem de cone hindu">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselInterval"
@@ -79,11 +79,16 @@
                 </button>
             </div>
         </section>
-        <section id="hero" class="mb-5">
-            <div class="container px-4 px-md-3 bn-header">
+        <section id="hero" class="container mb-5">
+            <div class=" px-4 px-md-3 bn-header">
                 <div class="row align-items-md-center">
-                    <div class="col-8 mx-auto col-md-4 order-md-2 col-lg-5 align-middle text-center">
-                        <img src="img/logo-removebg.png" class="img-fluid" alt="logo" style="width:80%">
+                    <div class="col-8 mx-auto col-md-4 order-md-2 col-lg-5 align-middle text-center">                        
+                        <span class="d-block d-lg-none">
+                         <img src="img/logo-removebg.png" class="img-fluid w-100" alt="logo">   
+                        </span>
+                        <span class="d-none d-lg-block">
+                            <img src="img/logo-removebg.png" class="img-fluid" alt="logo" style="width: 60%;">
+                        </span>                        
                     </div>
                     <div class="col-md-8 order-md-1 col-lg-7 text-center text-md-start">
                         <h1 class="display-5 mx-2 my-4">Trabalhamos com atacado e varejo.</h1>
