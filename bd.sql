@@ -2,7 +2,7 @@ CREATE DATABASE appbel;
 \c appbel
 
 CREATE TABLE contatos (
-    data DATE,
+    data DATE DEFAULT CURRENT_DATE,
     motivo_contato VARCHAR(50) NOT NULL,
     nome VARCHAR(50) NOT NULL,
     telefone VARCHAR(15),

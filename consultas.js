@@ -16,21 +16,21 @@ const pool = new pg.Pool({
 
 const registrarMensagem = async (motivo, nome, telefone, email, mensagem) => {
     const consulta = {
-        text: "INSERT INTO contatos (data, motivo_contato, nome, telefone, email, mensagem, status) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;",
-        values: [data, motivo, nome, telefone, email, mensagem, false],
+        text: "INSERT INTO contatos (motivo_contato, nome, telefone, email, mensagem, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;",
+        values: [motivo, nome, telefone, email, mensagem, false],
     };
     try {
         const resultado = await pool.query(consulta);
+        console.log(resultado)
         return resultado.rows[0];
 
     } catch (error) {
-        return error;
+        console.log(error);       
     }
 };
 
 const consultarMensagens = async () => {
-    try {
-        //             
+    try {    
         const resultado = await pool.query(`SELECT TO_CHAR(data, 'dd/mm/yyyy') as data, motivo_contato, nome, telefone, email, mensagem, status FROM contatos`);
         return resultado.rows;
     } catch (error) {

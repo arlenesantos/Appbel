@@ -92,8 +92,8 @@ app.get("/contato", async (req, res) => {
 
 app.post("/contato", async (req, res) => {
     try {
-        const { motivo, nome, telefone, email, mensagem } = req.body;
-        await registrarMensagem(motivo, nome, telefone, email, mensagem);
+        const { motivo, nome, telefone, email, mensagem } = req.body;        
+        await registrarMensagem(motivo, nome, telefone, email, mensagem);        
         res.status(200);
         res.redirect("/contato");
     } catch (error) {
@@ -135,7 +135,7 @@ app.post("/login", async (req, res) => {
         if (admin.email) {
             const token = jwt.sign(
                 {
-                    exp: Math.floor(Date.now() / 1000) + 120,
+                    exp: Math.floor(Date.now() / 1000) + 28800,
                     data: admin,
                 },
                 key

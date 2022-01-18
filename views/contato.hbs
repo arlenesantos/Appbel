@@ -8,8 +8,8 @@
         <div>
             <form class="row mt-5" action="/contato" method="POST">                
                     <div class="mb-3">
-                        <select name= "motivo" class="form-select">
-                            <option selected>Por favor selecione uma das opções:</option>
+                        <select name= "motivo" class="form-select" required>
+                            <option value="" selected>Por favor selecione uma das opções:</option>
                             <option value="adquirir-produtos">Adquirir produtos</option>
                             <option value="tornar-parceiro">Tornar-me parceiro(a)</option>
                             <option value="consulta">Consulta - Tenho uma dúvida</option>
@@ -18,21 +18,21 @@
                     </div>
                     <div class="mb-3">
                         <label for="nome" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="nome" name="nome">
+                        <input type="text" class="form-control" id="nome" name="nome" required>
                     </div>
                     <div class="mb-3">
                         <label for="telefone" class="form-label">Telefone</label>                        
-                        <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="DDD912345678" pattern="[0-9]{3}[0-9]{5}[0-9]{4}">
+                        <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="DDD912345678" pattern="[0-9]{3}[0-9]{5}[0-9]{4}" required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email">
+                        <input type="email" class="form-control" id="email" name="email" required>
                     </div>
                     <div class="mb-3">
                         <label for="mensagem" class="form-label">Mensagem</label>
                         <textarea class="form-control" rows="3" name="mensagem" id="mensagem"
                             placeholder="Digite aqui sua mensagem. Se preferir deixe seu número que retornaremos seu contato!"
-                            maxlength="2000"></textarea>
+                            maxlength="2000" required></textarea>
                     </div>
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-outline-success">Enviar</button>
