@@ -182,7 +182,7 @@ app.get("/admin", async (req, res) => {
     }
 });
 
-app.get("/admin-contatos", async (req, res) => {
+app.get("/admin/contatos", async (req, res) => {
     try {
         //validar session:
         if (req.session.logged_in) {
@@ -200,7 +200,7 @@ app.get("/admin-contatos", async (req, res) => {
     }
 });
 
-app.put("/api/admin-contatos", async (req, res) => {
+app.put("/api/admin/contatos", async (req, res) => {
     // autenticar com jwt:
     try {
         const token = req.header('token');
@@ -229,7 +229,7 @@ app.put("/api/admin-contatos", async (req, res) => {
     }
 });
 
-app.delete("/api/admin-contatos", async (req, res) => {
+app.delete("/api/admin/contatos", async (req, res) => {
     // autenticar com jwt:
     try {
         const token = req.header('token');
@@ -260,7 +260,7 @@ app.delete("/api/admin-contatos", async (req, res) => {
 });
 
 //blog-admin:
-app.get("/admin-blog", async (req, res) => {
+app.get("/admin/blog", async (req, res) => {
     try {
         if (req.session.logged_in) {
             const artigos = await consultarArtigos();
@@ -277,7 +277,7 @@ app.get("/admin-blog", async (req, res) => {
     }
 });
 
-app.get("/admin-artigo", async (req, res) => {
+app.get("/admin/artigo", async (req, res) => {
     try {
         if (req.session.logged_in) {
             const { id } = req.query;
@@ -299,7 +299,7 @@ app.get("/admin-artigo", async (req, res) => {
     }
 });
 
-app.post("/api/admin-artigo", async (req, res) => {
+app.post("/api/admin/artigo", async (req, res) => {
     try {
         const token = req.header('token');
         if (token) {
@@ -327,7 +327,7 @@ app.post("/api/admin-artigo", async (req, res) => {
     }
 });
 
-app.put("/api/admin-artigo", async (req, res) => {
+app.put("/api/admin/artigo", async (req, res) => {
     try {
         const token = req.header('token');
         if (token) {
@@ -357,7 +357,7 @@ app.put("/api/admin-artigo", async (req, res) => {
 });
 
 
-app.delete("/api/admin-artigo", async (req, res) => {
+app.delete("/api/admin/artigo", async (req, res) => {
     try {
         const token = req.header('token');
         if (token) {

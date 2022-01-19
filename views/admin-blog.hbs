@@ -2,7 +2,7 @@
     <h1 class="display-4 text-center">Admin - Blog</h1>
     <hr>
 
-    <a id="novoArtigo" href="/admin-artigo" role="button" class="btn btn-success mb-3">Criar Novo Artigo</a>
+    <a id="novoArtigo" href="/admin/artigo" role="button" class="btn btn-success mb-3">Criar Novo Artigo</a>
 
     <div class="table-responsive">
         <table class="table">
@@ -28,7 +28,7 @@
                     </td>
                     <td class="mx-auto">
                         <button type="button" class="btn btn-warning btn-sm">
-                            <a class="editarbtn" href="/admin-artigo?id={{this.id}}">
+                            <a class="editarbtn" href="/admin/artigo?id={{this.id}}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white"
                                     class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                     <path
@@ -74,7 +74,7 @@
 
         if (window.confirm("Você realmente quer excluir este artigo?")) {
 
-            fetch("/api/admin-artigo", {
+            fetch("/api/admin/artigo", {
                 method: "DELETE",
                 body: JSON.stringify({ id }),
                 headers: {
@@ -88,7 +88,7 @@
                     location.href = `/login`;
                 } else {
                     alert("Artigo excluído com sucesso.");
-                    location.href = `/admin-blog`;
+                    location.href = `/admin/blog`;
                 }
 
             }).catch(error => console.log(error));

@@ -57,7 +57,7 @@
     const changeStatus = async (email, e) => {
         let status = e.checked;
 
-        fetch("/api/admin-contatos", {
+        fetch("/api/admin/contatos", {
             method: "PUT",
             body: JSON.stringify({ email, status }),
             headers: {
@@ -69,7 +69,7 @@
                 ? "Contato respondido"
                 : "Contato ainda não respondido"
             );
-            location.href = "/admin-contatos"
+            location.href = "/admin/contatos"
 
         }).catch(error => console.log(error))
     };
@@ -80,7 +80,7 @@
 
         if (window.confirm("Você realmente quer excluir este contato?")) {
 
-            fetch("/api/admin-contatos", {
+            fetch("/api/admin/contatos", {
                 method: "DELETE",
                 body: JSON.stringify({ email }),
                 headers: {
@@ -89,7 +89,7 @@
                 },
             }).then(res => res.json()).then(data => {
                 alert("Contato/mensagem excluído com sucesso.");
-                location.href = "/admin-contatos";
+                location.href = "/admin/contatos";
 
             }).catch(error => console.log(error));
         }

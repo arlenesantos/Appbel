@@ -80,7 +80,7 @@ const verificarAdmin = async (email, senha) => {
     }
 };
 
-//admin-blog:
+//admin/blog:
 
 const consultarArtigos = async () => {
     try {
