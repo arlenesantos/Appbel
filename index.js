@@ -152,7 +152,7 @@ app.post("/login", async (req, res) => {
         }
     } else {
         res.status(404).send({
-            error: "Email ou senha incorretos",
+            msg: "Email ou senha incorretos. Tente novamente.",
             code: 404,
         });
     }

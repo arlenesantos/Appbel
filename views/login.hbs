@@ -31,7 +31,7 @@
         let alertPlaceholder = document.getElementById('liveAlertPlaceholder');
 
 
-        const loginAlert = (message, type) => {
+        const loginAlert = (message) => {
             let wrapper = document.createElement('div');
             wrapper.innerHTML = 
             `<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -57,9 +57,12 @@
             },
         })
             .then(res => res.json()).then(data => {
-                console.log(data)
-                localStorage.setItem("token", data.token)
-                window.location.href = `/admin/contatos`;
+                if(data.code == 404){
+                    loginAlert(data.msg);
+                } else {
+                    localStorage.setItem("token", data.token)
+                    window.location.href = `/admin/contatos`;
+                }                
             })
             .catch(error => console.log(error))
 
