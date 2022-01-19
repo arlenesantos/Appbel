@@ -212,8 +212,8 @@ app.put("/api/admin/contatos", async (req, res) => {
                         code: 401
                     })
                 } else {
-                    const { email, status } = req.body;
-                    const contato = await editarStatus(email, status);
+                    const { id, status } = req.body;
+                    const contato = await editarStatus(id, status);
                     res.status(200).type("json").send(contato);
                 }
             })
@@ -241,8 +241,8 @@ app.delete("/api/admin/contatos", async (req, res) => {
                         code: 401
                     })
                 } else {
-                    const { email } = req.body;
-                    const contatos = await eliminarMensagem(email);
+                    const { id } = req.body;
+                    const contatos = await eliminarMensagem(id);
                     res.status(200).type("json").send(contatos);
                     res.render("admin-contatos", { contatos });
                 }

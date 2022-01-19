@@ -31,17 +31,17 @@ const registrarMensagem = async (motivo, nome, telefone, email, mensagem) => {
 
 const consultarMensagens = async () => {
     try {    
-        const resultado = await pool.query(`SELECT TO_CHAR(data, 'dd/mm/yyyy') as data, motivo_contato, nome, telefone, email, mensagem, status FROM contatos`);
+        const resultado = await pool.query(`SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, motivo_contato, nome, telefone, email, mensagem, status FROM contatos`);
         return resultado.rows;
     } catch (error) {
         return error;
     }
 };
 
-const editarStatus = async (email, status) => {
+const editarStatus = async (id, status) => {
     const consulta = {
-        text: "UPDATE contatos SET status = $2 WHERE email = $1 RETURNING *;",
-        values: [email, status],
+        text: "UPDATE contatos SET status = $2 WHERE id = $1 RETURNING *;",
+        values: [id, status],
     };
     try {
         const resultado = await pool.query(consulta);
@@ -53,10 +53,10 @@ const editarStatus = async (email, status) => {
 };
 
 
-const eliminarMensagem = async (email) => {
+const eliminarMensagem = async (id) => {
     const consulta = {
-        text: "DELETE FROM contatos WHERE email = $1 RETURNING *;",
-        values: [email],
+        text: "DELETE FROM contatos WHERE id = $1 RETURNING *;",
+        values: [id],
     };
     try {
         const resultado = await pool.query(consulta);

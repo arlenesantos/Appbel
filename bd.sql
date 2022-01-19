@@ -2,11 +2,12 @@ CREATE DATABASE appbel;
 \c appbel
 
 CREATE TABLE contatos (
+    id SERIAL PRIMARY KEY,
     data DATE DEFAULT CURRENT_DATE,
     motivo_contato VARCHAR(50) NOT NULL,
     nome VARCHAR(50) NOT NULL,
     telefone VARCHAR(15),
-    email VARCHAR(50) PRIMARY KEY,
+    email VARCHAR(50) NOT NULL,
     mensagem TEXT,
     status BOOLEAN NOT NULL
 );

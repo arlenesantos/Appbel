@@ -19,7 +19,7 @@
             <tbody>
                 {{#each contatos}}
                 <tr>
-                    <td>{{inc @index}}</td>
+                    <td>{{this.id}}</td>
                     <td>{{this.data}}</td>
                     <td>{{this.motivo_contato}}</td>
                     <td>{{this.nome}}</td>
@@ -29,12 +29,12 @@
                     <td class="mx-auto">
                         <input class="form-check-input btn btn-outline-success btn-lg" type="checkbox"
                             id="flexCheckDefault" {{#if this.status}} checked {{/if}}
-                            onclick="changeStatus('{{this.email}}', this)" value="1">
+                            onclick="changeStatus('{{this.id}}', this)" value="1">
                         <label class="form-check-label" for="flexCheckDefault"></label>
                     </td>
                     <td class="mx-auto">
                         <button id="eliminarMensagem" type="button" class="btn btn-danger btn-sm"
-                            onclick="excluirMsg('{{this.email}}')">
+                            onclick="excluirMsg('{{this.id}}')">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path
@@ -54,12 +54,12 @@
 <script>
 
     //atualizar status da mensagem/contato
-    const changeStatus = async (email, e) => {
+    const changeStatus = async (id, e) => {
         let status = e.checked;
 
         fetch("/api/admin/contatos", {
             method: "PUT",
-            body: JSON.stringify({ email, status }),
+            body: JSON.stringify({ id, status }),
             headers: {
                 'Content-Type': 'application/json',
                 'token': localStorage.getItem('token')
@@ -76,13 +76,13 @@
 
 
     //excluir contato/mensagem
-    const excluirMsg = async (email) => {
+    const excluirMsg = async (id) => {
 
         if (window.confirm("Você realmente quer excluir este contato?")) {
 
             fetch("/api/admin/contatos", {
                 method: "DELETE",
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({ id }),
                 headers: {
                     'Content-Type': 'application/json',
                     'token': localStorage.getItem('token')
