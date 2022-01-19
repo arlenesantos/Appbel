@@ -9,7 +9,7 @@ const key = uuidv4().slice(30);
 var session = require('express-session');
 
 //consultas base de dados PostgreSQL
-const { registrarMensagem, consultarMensagens, editarStatus, eliminarMensagem, verificarAdmin, consultarArtigos, criarArtigo, consultarArtigo, editarArtigo, excluirArtigo } = require("./consultas");
+const { registrarMensagem, consultarMensagens, editarStatus, eliminarMensagem, verificarAdmin, consultarArtigos, criarArtigo, consultarArtigo, editarArtigo, excluirArtigo,  consultarParceiros, consultarParceiro, cadastrarParceiro, editarParceiro, excluirParceiro } = require("./consultas");
 
 //integrações:
 app.use(express.urlencoded({ extended: false }));
@@ -106,7 +106,8 @@ app.post("/contato", async (req, res) => {
 
 app.get("/parceiros", async (req, res) => {
     try {
-        res.render("parceiros");
+        const parceiros = await consultarParceiros();        
+        res.render('parceiros', { parceiros: parceiros });        
 
     } catch (error) {
         res.status(500).send({ error: error, code: 500 });
@@ -371,6 +372,132 @@ app.delete("/api/admin/artigo", async (req, res) => {
                     const { id } = req.body;
                     const artigoExcluido = await excluirArtigo(id);
                     res.status(200).type("json").send({ 'artigo': artigoExcluido, 'token': token });
+                }
+            })
+        } else {
+            //se não houver token:            
+            res.render('login', { layout: 'adm' });
+        }
+    } catch (error) {
+        res.status(500).send({
+            error: `Erro no servidor: ${error}`,
+            code: 500
+        })
+    }
+});
+
+//blog-parceiros:
+app.get("/admin/parceiros", async (req, res) => {
+    try {
+        if (req.session.logged_in) {            
+            const parceiros = await consultarParceiros();
+            res.render('admin-parceiros', { layout: 'adm', logged: req.session.logged_in, parceiros: parceiros });
+        } else {
+            res.status(200);
+            res.render('login', { layout: 'adm' });
+        }
+    } catch (error) {
+        res.status(500).send({
+            error: `Erro no servidor: ${error}`,
+            code: 500
+        });
+    }
+});
+
+app.get("/admin/parceiro", async (req, res) => {
+    try {
+        if (req.session.logged_in) {
+            const { id } = req.query;
+            if (id) {
+                const parceiro = await consultarParceiro(id);
+                res.render('novoparceiro', { layout: 'adm', logged: req.session.logged_in, parceiro: parceiro });
+            } else {
+                res.render('novoparceiro', { layout: 'adm', logged: req.session.logged_in });
+            }
+        } else {
+            res.status(200);
+            res.render('login', { layout: 'adm' });
+        }
+    } catch (error) {
+        res.status(500).send({
+            error: `Erro no servidor: ${error}`,
+            code: 500
+        });
+    }
+});
+
+
+app.post("/api/admin/parceiros", async (req, res) => {
+    try {
+        const token = req.header('token');
+        if (token) {
+            jwt.verify(token, key, async (error) => {
+                if (error) {
+                    res.status(401).send({
+                        error: `Erro no servidor: ${error}`,
+                        code: 401
+                    })
+                } else {
+                    const { nome, email, telefone, endereco, website } = req.body;
+                    const novoParceiro = await cadastrarParceiro(nome, email, telefone, endereco, website);
+                    res.status(200).type("json").send({ 'parceiro': novoParceiro, 'token': token });
+                }
+            })
+        } else {
+            //se não houver token:            
+            res.render('login', { layout: 'adm' });
+        }
+    } catch (error) {
+        res.status(500).send({
+            error: `Erro no servidor: ${error}`,
+            code: 500
+        });
+    }
+});
+
+app.put("/api/admin/parceiros", async (req, res) => {
+    try {
+        const token = req.header('token');
+        if (token) {
+            jwt.verify(token, key, async (error) => {
+                if (error) {
+                    res.status(401).send({
+                        error: `Erro no servidor: ${error}`,
+                        code: 401
+                    })
+                } else {
+                    const { id, nome, email, telefone, endereco, website} = req.body;
+                    const parceiroEditado = await editarParceiro(id, nome, email, telefone, endereco, website);                    
+                    res.status(200).type("json").send({ 'parceiro': parceiroEditado, 'token': token });
+                }
+            })
+        } else {
+            //se não houver token:            
+            res.render('login', { layout: 'adm' });
+        }
+    } catch (error) {
+        res.status(500).send({
+            error: `Erro no servidor: ${error}`,
+            code: 500
+        });
+    }
+});
+
+
+app.delete("/api/admin/parceiros", async (req, res) => {
+    try {
+        const token = req.header('token');
+        if (token) {
+            jwt.verify(token, key, async (error) => {
+                if (error) {
+                    res.status(401).send({
+                        error: `Erro no servidor: ${error}`,
+                        code: 401
+                    })
+                } else {
+                    const { id } = req.body;
+                    const parceiroExcluido = await excluirParceiro(id);
+                    res.status(200).type("json").send({ 'parceiro': parceiroExcluido, 'token': token });
                 }
             })
         } else {

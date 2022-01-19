@@ -25,12 +25,12 @@ const registrarMensagem = async (motivo, nome, telefone, email, mensagem) => {
         return resultado.rows[0];
 
     } catch (error) {
-        console.log(error);       
+        console.log(error);
     }
 };
 
 const consultarMensagens = async () => {
-    try {    
+    try {
         const resultado = await pool.query(`SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, motivo_contato, nome, telefone, email, mensagem, status FROM contatos`);
         return resultado.rows;
     } catch (error) {
@@ -107,11 +107,11 @@ const criarArtigo = async (data, titulo, imagem, conteudo) => {
 }
 
 const consultarArtigo = async (id, dataPtBR = false) => {
-    const query = dataPtBR 
-        ? `SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, titulo, imagem, conteudo FROM artigos WHERE id = $1;`        
+    const query = dataPtBR
+        ? `SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, titulo, imagem, conteudo FROM artigos WHERE id = $1;`
         : `SELECT id, data, titulo, imagem, conteudo 
             FROM artigos WHERE id = $1;`;
-        
+
     try {
         const consulta = {
             text: query,
@@ -152,6 +152,76 @@ const excluirArtigo = async (id) => {
     }
 };
 
+//admin/parceiros:
+
+const consultarParceiros = async () => {
+    try {
+        const resultado = await pool.query(`SELECT id, nome, email, telefone, endereco, website FROM parceiros;`);
+        return resultado.rows;
+
+    } catch (error) {
+        throw error;
+    }
+};
+
+const consultarParceiro = async (id) => {
+    const consulta = {
+        text: `SELECT id, nome, email, telefone, endereco, website FROM parceiros WHERE id = $1;`,
+        values: [id]
+    }
+
+    try {
+        const resultado = await pool.query(consulta);
+        return resultado.rows[0];
+
+    } catch (error) {
+        throw error;
+    }
+};
+
+const cadastrarParceiro = async (nome, email, telefone, endereco, website) => {
+    const consulta = {
+        text: `INSERT INTO parceiros (nome, email, telefone, endereco, website) VALUES ($1, $2, $3, $4, $5) RETURNING *;`,
+        values: [nome, email, telefone, endereco, website]
+    }
+    try {
+        const resultado = await pool.query(consulta);
+        return resultado.rows[0];
+
+    } catch (error) {
+        throw error;
+    }
+}
+
+const editarParceiro = async (id, nome, email, telefone, endereco, website) => {
+    const consulta = {
+        text: `UPDATE parceiros SET nome = $2, email = $3, telefone = $4, endereco = $5, website = $6  WHERE id = $1 RETURNING *;`,
+        values: [id, nome, email, telefone, endereco, website]
+    }
+    try {
+        const resultado = await pool.query(consulta);
+        return resultado.rows[0];
+
+    } catch (error) {
+        throw error;
+    }
+};
+
+const excluirParceiro = async (id) => {
+    const consulta = {
+        text: "DELETE FROM parceiros WHERE id = $1 RETURNING *;",
+        values: [id],
+    };
+    try {
+        const resultado = await pool.query(consulta);
+        return resultado.rows[0];
+    } catch (error) {
+        throw error;
+    }
+};
+
+
+
 
 module.exports = {
     registrarMensagem,
@@ -164,5 +234,10 @@ module.exports = {
     consultarArtigo,
     editarArtigo,
     excluirArtigo,
+    consultarParceiros,
+    consultarParceiro,
+    cadastrarParceiro,
+    editarParceiro,
+    excluirParceiro,
 
 }

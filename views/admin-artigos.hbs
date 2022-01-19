@@ -2,7 +2,7 @@
     <div class="container">
 
         <div>
-            <form class="row mt-5 py-5" action="/admin-artigo">
+            <form class="row mt-5 py-5" action="/admin/artigo">
                 <input type="hidden" name="id" id="id" {{#if artigo}} value="{{artigo.id}}" {{/if}}>
                 <div class="mb-3">
                     <label for="data" class="form-label">Data de publicação</label>
@@ -65,7 +65,7 @@
         const imagem = document.getElementById("imagem").value;
         const conteudo = editor.getData();
 
-        fetch("/api/admin-artigo", {
+        fetch("/api/admin/artigo", {
             method: metodo,
             body: JSON.stringify({ id, data, titulo, imagem, conteudo }),
             headers: {

@@ -1,4 +1,4 @@
-<section id="parceiros">
+<section>
     <div class="container">
         
         <div>
@@ -15,30 +15,22 @@
                     <thead>
                         <tr>
                             <th scope="col">Nome</th>
+                            <th scope="col">Email</th>
                             <th scope="col">Telefone</th>
                             <th scope="col">Endereço</th>
                             <th scope="col">Website</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {{#each parceiros}}
                         <tr>
-                            <th scope="row">Nome do profissional</th>
-                            <td>+41 1234-5678</td>
-                            <td>Rua das Flores, 15</td>
-                            <td>www.site.com</td>
+                            <th scope="row">{{this.nome}}</th>
+                            <td>{{this.email}}</td>
+                            <td>{{this.telefone}}</td>
+                            <td>{{this.endereco}}</td>
+                            <td>{{this.website}}</td>
                         </tr>
-                        <tr>
-                            <th scope="row">xxx</th>
-                            <td>xxx</td>
-                            <td>xxx</td>
-                            <td>xxx</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">xxx</th>
-                            <td>xxx</td>
-                            <td>xxx</td>
-                            <td>xxx</td>
-                        </tr>
+                        {{/each}}                        
                     </tbody>
                 </table>
             </div>            

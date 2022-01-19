@@ -12,14 +12,13 @@ CREATE TABLE contatos (
     status BOOLEAN NOT NULL
 );
 
-
 CREATE TABLE admin (
     nome VARCHAR(50) NOT NULL,    
     email VARCHAR(50) PRIMARY KEY,
     senha VARCHAR(50) NOT NULL    
 );
 
--- INSERT INTO admin (nome, email, senha) VALUES ('Lucimara', 'lu@teste.com', 'lu123');
+-- INSERT INTO admin (nome, email, senha) VALUES ('Administrador', 'admin@teste.com', '123');
 
 CREATE TABLE artigos (
     id SERIAL PRIMARY KEY,
@@ -30,3 +29,13 @@ CREATE TABLE artigos (
 );
 
 --  INSERT INTO artigos (data, titulo, imagem, conteudo) VALUES (current_date, 'titulo teste', 'https://image.freepik.com/fotos-gratis/close-up-terapeuta-usando-vela-no-ouvido_23-2148882174.jpg', 'conteudo teste');
+
+CREATE TABLE parceiros (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    telefone VARCHAR(15) NOT NULL,
+    endereco VARCHAR(50) NOT NULL,
+    website  VARCHAR(50)  
+);
+--  INSERT INTO parceiros (nome, email, telefone, endereco, website) VALUES ('ana maria', 'ana@teste.com', '12345678', 'Rua das Flores, 15', 'www.teste.com');

@@ -1,0 +1,98 @@
+<section class="py-5">
+    <div class="container">
+
+        <div>
+            <h1 class="pt-5">Parceiros</h1>
+            <form class="row mt-5 pb-5" action="/api/admin/parceiros">
+                <input type="hidden" name="id" id="id" {{#if parceiro}} value="{{parceiro.id}}" {{/if}}>
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="nome" name="nome" required {{#if parceiro}} value="{{parceiro.nome}}" {{/if}}>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required {{#if parceiro}} value="{{parceiro.email}}" {{/if}}>
+                </div>
+                <div class="mb-3">
+                    <label for="telefone" class="form-label">Telefone</label>
+                    <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="DDD912345678" pattern="[0-9]{3}[0-9]{5}[0-9]{4}" required {{#if parceiro}} value="{{parceiro.telefone}}" {{/if}}>
+                </div>
+                <div class="mb-3">
+                    <label for="endereco" class="form-label">Endereço</label>
+                    <input type="text" class="form-control" id="endereco" name="endereco" required {{#if parceiro}} value="{{parceiro.endereco}}" {{/if}}>
+                </div>
+                <div class="mb-3">
+                    <label for="website" class="form-label">Website</label>
+                    <input type="text" class="form-control" id="website" name="website" required {{#if parceiro}} value="{{parceiro.website}}" {{/if}}>
+                </div> 
+                {{#if parceiro }}
+                <div class="d-grid gap-2">
+                    <button id="atualizarParceiro" type="submit" class="btn btn-outline-success">Atualizar dados do Parceiro!</button>
+                </div>
+                {{else }}
+                <div class="d-grid gap-2">
+                    <button id="cadastrarParceiro" type="submit" class="btn btn-outline-success">Cadastrar Parceiro!</button>
+                </div>
+                {{/if}}               
+                 
+            </form>
+        </div>
+
+        
+
+    </div>
+</section>
+
+<script>
+
+     
+    const editarParceiro = async (metodo, mensagem) => {
+
+        const id = document.getElementById("id").value;
+        const nome = document.getElementById("nome").value;
+        const email = document.getElementById("email").value;
+        const telefone = document.getElementById("telefone").value;
+        const endereco = document.getElementById("endereco").value;
+        const website = document.getElementById("website").value;
+        
+
+        fetch("/api/admin/parceiros", {
+            method: metodo,
+            body: JSON.stringify({ id, nome, email, telefone, endereco, website}),
+            headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token')
+            },
+        }).then(res => res.json()).then(data => {
+            const token = data.token;
+            if (data.code === 401) {
+                alert("Acesso negado.");
+                localStorage.clear();
+                location.href = `/login`;
+            } else {
+                alert(mensagem);
+                location.href = `/admin/parceiros`;
+            }
+        }).catch(error => console.log(error))
+    };
+
+    const criar = document.getElementById('cadastrarParceiro');
+    if (criar) {
+        criar.addEventListener("click", async (e) => {
+            e.preventDefault();
+            editarParceiro('POST', 'Parceiro criado com sucesso.');
+        })
+    };
+
+    const editar = document.getElementById('atualizarParceiro');
+    if (editar) {
+        editar.addEventListener("click", async (e) => {
+            e.preventDefault();
+            editarParceiro('PUT', 'Parceiro atualizado com sucesso.');
+        })
+    };
+
+
+
+
+</script>
