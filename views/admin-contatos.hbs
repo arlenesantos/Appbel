@@ -77,21 +77,25 @@
 
     //excluir contato/mensagem
     const excluirMsg = async (email) => {
-        fetch("/api/admin-contatos", {
-            method: "DELETE",
-            body: JSON.stringify({ email }),
-            headers: {
-                'Content-Type': 'application/json',
-                'token': localStorage.getItem('token')
-            },
-        }).then(res => res.json()).then(data => {
-            alert("Mensagem excluída com sucesso.");
-            location.href = "/admin-contatos";
 
-        }).catch(error => console.log(error))
+        if (window.confirm("Você realmente quer excluir este contato?")) {
+
+            fetch("/api/admin-contatos", {
+                method: "DELETE",
+                body: JSON.stringify({ email }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'token': localStorage.getItem('token')
+                },
+            }).then(res => res.json()).then(data => {
+                alert("Contato/mensagem excluído com sucesso.");
+                location.href = "/admin-contatos";
+
+            }).catch(error => console.log(error));
+        }
     };
 
-   
+
 
 
 </script>
