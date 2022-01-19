@@ -169,7 +169,7 @@ app.delete("/login", async (req, res) => {
 app.get("/admin", async (req, res) => {
     try {
         if (req.session.logged_in) {
-            res.render('admin', { layout: 'adm', logged: req.session.logged_in });
+            res.render('admin-contatos', { layout: 'adm', logged: req.session.logged_in });
         } else {
             res.status(200);
             res.render('login', { layout: 'adm' });
