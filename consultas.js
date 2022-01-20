@@ -140,6 +140,16 @@ const filtrarArtigos = async (mes, ano) => {
     }
 };
 
+//listar data para coluna arquivos:
+const listarDataArquivos = async () => {
+    try {       
+        const resultado = await pool.query(`SELECT DISTINCT EXTRACT(MONTH FROM data) AS mes, EXTRACT(YEAR FROM data) AS ano FROM artigos;`);
+        return resultado.rows;
+        
+    } catch (error) {
+        throw error;
+    }
+};
 
 const editarArtigo = async (id, data, titulo, imagem, conteudo) => {
     const consulta = {
@@ -248,6 +258,7 @@ module.exports = {
     criarArtigo,
     consultarArtigo,
     filtrarArtigos,
+    listarDataArquivos,
     editarArtigo,
     excluirArtigo,
     consultarParceiros,
