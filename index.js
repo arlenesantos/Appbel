@@ -124,7 +124,9 @@ app.get("/parceiros", async (req, res) => {
 // sistema de login
 app.get("/login", async (req, res) => {
     try {
-        res.render('login', { layout: 'adm' });
+        //res.render('login', { layout: 'adm' });
+        res.render('login', { layout: false });
+       
 
     } catch (error) {
         res.status(500).send({
@@ -180,7 +182,8 @@ app.get("/admin", async (req, res) => {
             res.render('admin-contatos', { layout: 'adm', logged: req.session.logged_in });
         } else {
             res.status(200);
-            res.render('login', { layout: 'adm' });
+            //res.render('login', { layout: 'adm' });
+            res.render('login', { layout: false });
         }
     } catch (error) {
         res.status(500).send({
@@ -198,7 +201,7 @@ app.get("/admin/contatos", async (req, res) => {
             res.render('admin-contatos', { layout: 'adm', logged: req.session.logged_in, contatos: contatos });
         } else {
             res.status(200);
-            res.render('login', { layout: 'adm' });
+            res.render('login', { layout: false });
         }
     } catch (error) {
         res.status(500).send({
@@ -227,7 +230,7 @@ app.put("/api/admin/contatos", async (req, res) => {
             })
         } else {
             //se não houver token:            
-            res.render('login', { layout: 'adm' });
+            res.render('login', { layout:false });
         }
     } catch (error) {
         res.status(500).send({
@@ -257,7 +260,7 @@ app.delete("/api/admin/contatos", async (req, res) => {
             })
         } else {
             //se não houver token:            
-            res.render('login', { layout: 'adm' });
+            res.render('login', { layout: false });
         }
     } catch (error) {
         res.status(500).send({
@@ -275,7 +278,7 @@ app.get("/admin/blog", async (req, res) => {
             res.render('admin-blog', { layout: 'adm', logged: req.session.logged_in, artigos: artigos });
         } else {
             res.status(200);
-            res.render('login', { layout: 'adm' });
+            res.render('login', { layout: false });
         }
     } catch (error) {
         res.status(500).send({
@@ -297,7 +300,7 @@ app.get("/admin/artigo", async (req, res) => {
             }
         } else {
             res.status(200);
-            res.render('login', { layout: 'adm' });
+            res.render('login', { layout: false });
         }
     } catch (error) {
         res.status(500).send({
@@ -325,7 +328,7 @@ app.post("/api/admin/artigo", async (req, res) => {
             })
         } else {
             //se não houver token:            
-            res.render('login', { layout: 'adm' });
+            res.render('login', { layout: false });
         }
     } catch (error) {
         res.status(500).send({
@@ -354,7 +357,7 @@ app.put("/api/admin/artigo", async (req, res) => {
             })
         } else {
             //se não houver token:            
-            res.render('login', { layout: 'adm' });
+            res.render('login', { layout: false });
         }
     } catch (error) {
         res.status(500).send({
@@ -383,7 +386,7 @@ app.delete("/api/admin/artigo", async (req, res) => {
             })
         } else {
             //se não houver token:            
-            res.render('login', { layout: 'adm' });
+            res.render('login', { layout: false });
         }
     } catch (error) {
         res.status(500).send({
@@ -401,7 +404,7 @@ app.get("/admin/parceiros", async (req, res) => {
             res.render('admin-parceiros', { layout: 'adm', logged: req.session.logged_in, parceiros: parceiros });
         } else {
             res.status(200);
-            res.render('login', { layout: 'adm' });
+            res.render('login', { layout: false });
         }
     } catch (error) {
         res.status(500).send({
@@ -423,7 +426,7 @@ app.get("/admin/parceiro", async (req, res) => {
             }
         } else {
             res.status(200);
-            res.render('login', { layout: 'adm' });
+            res.render('login', { layout: false });
         }
     } catch (error) {
         res.status(500).send({
@@ -452,7 +455,7 @@ app.post("/api/admin/parceiros", async (req, res) => {
             })
         } else {
             //se não houver token:            
-            res.render('login', { layout: 'adm' });
+            res.render('login', { layout: false });
         }
     } catch (error) {
         res.status(500).send({
@@ -480,7 +483,7 @@ app.put("/api/admin/parceiros", async (req, res) => {
             })
         } else {
             //se não houver token:            
-            res.render('login', { layout: 'adm' });
+            res.render('login', { layout: false });
         }
     } catch (error) {
         res.status(500).send({
@@ -509,7 +512,7 @@ app.delete("/api/admin/parceiros", async (req, res) => {
             })
         } else {
             //se não houver token:            
-            res.render('login', { layout: 'adm' });
+            res.render('login', { layout: false });
         }
     } catch (error) {
         res.status(500).send({

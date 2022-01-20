@@ -1,19 +1,68 @@
-<section id="login" class="container form-signin w-25">
-    <form class="mt-5 py-5" action="/login" method="POST">
-        <h1 class="h3 mb-3 fw-normal text-center">Login</h1>
+<!DOCTYPE html>
+<html lang="pt">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Cone hindu, cone fitoterápico, fitoterapia, cone, plantas medicinais, terapia">
+    <meta name="description"
+        content="Appbel distribui cones fitoterápicos para atacado e varejo. Os cones são feitos artesanalmente para extrair todo o pontencial da fitoterapia.">
+
+    <!-- Bootstrap v.5.1 e CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+
+    <title>Appbel</title>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <span class="navbar-brand">
+                <img src="/img/min-logo-removebg.png" alt="logo" style="width: 40%;">
+            </span>
+        </div>
+    </nav>
+
+    <main>
+        <section id="login" class="container form-signin w-25">
+            <form class="mt-5 py-5" action="/login" method="POST">
+                <h1 class="h3 mb-3 fw-normal text-center">Login</h1>
+
+                <div>
+                    <label class="text-muted" for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email">
+                </div>
+                <div class="mb-4">
+                    <label class="text-muted" for="senha">Senha</label>
+                    <input type="password" class="form-control" id="senha" name="senha">
+                </div>
+                <button id="entrar" class="w-100 btn btn-outline-success" type="submit">Entrar</button>
+            </form>
+            <div id="liveAlertPlaceholder"></div>
+        </section>
+    </main>
+
+
+
+    <footer class="align-items-center border-top w-100 text-center">
         <div>
-            <label class="text-muted" for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email">
+            <ul class="redes-sociais text-center">
+                <li><a href="#"><i class="fab fa-facebook text-success"></i></a></li>
+                <li><a href="#"><i class="fab fa-twitter text-success"></i></a></li>
+                <li><a href="#"><i class="fab fa-instagram text-success"></i></a></li>
+            </ul>
         </div>
-        <div class="mb-4">
-            <label class="text-muted" for="senha">Senha</label>
-            <input type="password" class="form-control" id="senha" name="senha">
-        </div>
-        <button id="entrar" class="w-100 btn btn-outline-success" type="submit">Entrar</button>
-    </form>
-    <div id="liveAlertPlaceholder"></div>
-</section>
+
+        <p class="col-md-4 mb-0 text-muted d-inline">© 2021 Todos os diretos reservados</p>
+    </footer>
+
+</body>
+
+</html>
 
 
 <script>
@@ -33,8 +82,8 @@
 
         const loginAlert = (message) => {
             let wrapper = document.createElement('div');
-            wrapper.innerHTML = 
-            `<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            wrapper.innerHTML =
+                `<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                 <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
                     <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
                 </symbol>
@@ -44,7 +93,7 @@
                 ${message}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
              </div>`
-                  
+
             alertPlaceholder.append(wrapper);
 
         };
@@ -57,12 +106,12 @@
             },
         })
             .then(res => res.json()).then(data => {
-                if(data.code == 404){
+                if (data.code == 404) {
                     loginAlert(data.msg);
                 } else {
                     localStorage.setItem("token", data.token)
                     window.location.href = `/admin/contatos`;
-                }                
+                }
             })
             .catch(error => console.log(error))
 
