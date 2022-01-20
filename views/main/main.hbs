@@ -15,11 +15,12 @@
     <link rel="stylesheet" href="/css/main.css">
 
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
-    <!-- Favicons -->    
+    <!-- Favicons -->
     <script src="https://kit.fontawesome.com/8cbe84e1e9.js" crossorigin="anonymous"></script>
-   
+
 
 
 
@@ -28,19 +29,20 @@
 </head>
 
 <body>
-    <header class="navbar navbar-expand-md navbar-light bg-light fixed-top">
-        <nav class="container-fluid">
+
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+        <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img src="img/min-logo-removebg.png" alt="logo" class="w-75 logo-img">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+            <div class="navbar-collapse collapse show" id="navbarCollapse" style="">
+                <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Produtos</a>
+                        <a class="nav-link" aria-current="page" href="/">Produtos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/parceiros">Parceiros</a>
@@ -52,10 +54,12 @@
                         <a class="nav-link" href="/blog">Blog</a>
                     </li>
                 </ul>
+                </li>
+                </ul>
             </div>
-        </nav>
-    </header>
-
+        </div>
+    </nav>
+    
     <main>
         <section id="carousel" class="d-block d-lg-none">
             <div id="carouselInterval" class=" row carousel carousel-dark slide my-5 bg-light" data-bs-ride="carousel">
@@ -85,19 +89,20 @@
         <section id="hero" class="container mb-5">
             <div class=" px-4 px-md-3 bn-header">
                 <div class="row align-items-md-center">
-                    <div class="col-8 mx-auto col-md-4 order-md-2 col-lg-5 align-middle text-center">                        
+                    <div class="col-8 mx-auto col-md-4 order-md-2 col-lg-5 align-middle text-center">
                         <span class="d-block d-lg-none">
-                         <img src="img/logo-removebg.png" class="img-fluid w-100" alt="logo">   
+                            <img src="img/logo-removebg.png" class="img-fluid w-100" alt="logo">
                         </span>
                         <span class="d-none d-lg-block">
                             <img src="img/logo-removebg.png" class="img-fluid" alt="logo" style="width: 60%;">
-                        </span>                        
+                        </span>
                     </div>
                     <div class="col-md-8 order-md-1 col-lg-7 text-center text-md-start">
                         <h1 class="display-5 mx-2 my-4">Trabalhamos com atacado e varejo.</h1>
                         <h2 class="display-6 text-muted mx-2 mb-4">Conheça nossos produtos e seja nosso parceiro!</h2>
                         <div class="d-grid gap-2">
-                            <a href="/parceiros" class="btn btn-outline-success btn-parceiro">Seja um Parceiro Appbel!</a>
+                            <a href="/parceiros" class="btn btn-outline-success btn-parceiro">Seja um Parceiro
+                                Appbel!</a>
                         </div>
                     </div>
                 </div>
@@ -127,10 +132,10 @@
                 <p>Trabalhamos com atacado e varejo. Além de atender a nossos consumidores diretos, fornecemos cones
                     para casas de produtos naturais, de Curitiba e de Campo Largo, farmácias de homeopatia e espaços
                     terapêuticos. Trabalhamos também com revendedores.</p>
-                <p>Conheça nossos produtos e seja nosso parceiro!</p>                
+                <p>Conheça nossos produtos e seja nosso parceiro!</p>
             </div>
         </div>
-        <div class= "text-center pb-2" style='color: #ced4da;'>
+        <div class="text-center pb-2" style='color: #ced4da;'>
             <p>Todos os direitos reservados.</p>
         </div>
     </footer>
