@@ -53,12 +53,20 @@
 	white-space: normal;
 	overflow: hidden;
 	text-overflow: ellipsis;
-  }
+}
 
+.bg-footer{
+    background-color:#f8f9fa;
+    margin-top: 100px;
+}
 
+footer > p {
+    color: #939799;
+}
 
-
-
+main {
+    min-height: 100vh;
+}
 
 
 
