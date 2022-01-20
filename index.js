@@ -9,7 +9,7 @@ const key = uuidv4().slice(30);
 var session = require('express-session');
 
 //consultas base de dados PostgreSQL
-const { registrarMensagem, consultarMensagens, editarStatus, eliminarMensagem, verificarAdmin, consultarArtigos, criarArtigo, consultarArtigo, editarArtigo, excluirArtigo,  consultarParceiros, consultarParceiro, cadastrarParceiro, editarParceiro, excluirParceiro } = require("./consultas");
+const { registrarMensagem, consultarMensagens, editarStatus, eliminarMensagem, verificarAdmin, consultarArtigos, criarArtigo, consultarArtigo, filtrarArtigos,  editarArtigo, excluirArtigo,  consultarParceiros, consultarParceiro, cadastrarParceiro, editarParceiro, excluirParceiro } = require("./consultas");
 
 //integrações:
 app.use(express.urlencoded({ extended: false }));
@@ -60,16 +60,23 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/blog", async (req, res) => {
-    try {
-        const artigos = await consultarArtigos();
-        res.render('blog', { artigos: artigos });
+    try {        
+        if(req.url.includes('/blog?mes')){   
+            const { mes, ano } = req.query;                  
+            const artigosFiltrados = await filtrarArtigos( mes, ano);
+            res.render('blog', { artigos: artigosFiltrados });
+
+        } else {
+            const artigos = await consultarArtigos();
+            res.render('blog', { artigos: artigos });
+        }        
 
     } catch (error) {
         res.status(500).send({ error: error, code: 500 });
     }
 });
 
-app.get("/blog-artigo", async (req, res) => {
+app.get("/blog/artigo", async (req, res) => {
     try {
         const { id } = req.query;
         if (id) {

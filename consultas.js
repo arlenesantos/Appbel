@@ -125,6 +125,22 @@ const consultarArtigo = async (id, dataPtBR = false) => {
     }
 };
 
+//filtrar artigo por mês para página do blog:
+const filtrarArtigos = async (mes, ano) => {    
+    try {
+        const consulta = {
+            text: `SELECT id, data, titulo, imagem, conteudo FROM artigos WHERE EXTRACT(MONTH FROM data) = $1 AND EXTRACT(YEAR FROM data) = $2;`,
+            values: [mes, ano]
+        }
+        const resultado = await pool.query(consulta);
+        return resultado.rows;
+
+    } catch (error) {
+        throw error;
+    }
+};
+
+
 const editarArtigo = async (id, data, titulo, imagem, conteudo) => {
     const consulta = {
         text: `UPDATE artigos SET data = $2, titulo = $3, imagem = $4, conteudo = $5 WHERE id = $1 RETURNING *;`,
@@ -222,7 +238,6 @@ const excluirParceiro = async (id) => {
 
 
 
-
 module.exports = {
     registrarMensagem,
     consultarMensagens,
@@ -232,6 +247,7 @@ module.exports = {
     consultarArtigos,
     criarArtigo,
     consultarArtigo,
+    filtrarArtigos,
     editarArtigo,
     excluirArtigo,
     consultarParceiros,
