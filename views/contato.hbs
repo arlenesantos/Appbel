@@ -6,11 +6,11 @@
         </div>
 
         <div>
-            <form class="row mt-5" action="/contato" method="POST">
-           
+            <form class="row mt-5 form-floating" action="/contato" method="POST">
+
                 <div class="mb-3">
                     <select name="motivo" class="form-select" required>
-                        <option value="" selected>Por favor selecione uma das opções:</option>
+                        <option value="" selected>Selecione:</option>
                         <option value="adquirir-produtos">Adquirir produtos</option>
                         <option value="tornar-parceiro">Tornar-me parceiro(a)</option>
                         <option value="consulta">Consulta - Tenho uma dúvida</option>
@@ -22,9 +22,9 @@
                     <input type="text" class="form-control" id="nome" name="nome" required>
                 </div>
                 <div class="mb-3">
-                    <label for="telefone" class="form-label">Telefone</label>
-                    <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="DDD912345678"
-                        pattern="[0-9]{3}[0-9]{5}[0-9]{4}" required>
+                    <label for="telefone" class="form-label">Telefone</label> <br>
+                    <small class="text-muted">Por favor use o seguinte formato: DDD-91234-5678 para telefone celular ou DDD-1234-5678 para telefone fixo</small>
+                    <input type="tel" class="form-control" id="telefone" name="telefone"  pattern="[0-9]{3}[-]([0-9]{4}|[0-9]{5})[-][0-9]{4}" required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
@@ -33,10 +33,9 @@
                 <div class="mb-3">
                     <label for="mensagem" class="form-label">Mensagem</label>
                     <textarea class="form-control" rows="3" name="mensagem" id="mensagem"
-                        placeholder="Digite aqui sua mensagem. Se preferir deixe seu número que retornaremos seu contato!"
-                        maxlength="1000" required></textarea>
-                    <span id="nchars" class="text-muted">1000</span> 
-                    <span class="text-muted">caracteres restantes</span>
+                        placeholder="Digite aqui sua mensagem."                maxlength="1000" required></textarea>
+                    <small id="nchars" class="text-muted">1000</small>
+                    <small class="text-muted">caracteres restantes</small>
                 </div>
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-outline-success">Enviar</button>

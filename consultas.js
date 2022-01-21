@@ -21,7 +21,6 @@ const registrarMensagem = async (motivo, nome, telefone, email, mensagem) => {
     };
     try {
         const resultado = await pool.query(consulta);
-        console.log(resultado)
         return resultado.rows[0];
 
     } catch (error) {
@@ -126,10 +125,10 @@ const consultarArtigo = async (id, dataPtBR = false) => {
 };
 
 //filtrar artigo por mês para página do blog:
-const filtrarArtigos = async (mes, ano) => {    
+const filtrarArtigos = async (mes, ano) => { 
     try {
         const consulta = {
-            text: `SELECT id, data, titulo, imagem, conteudo FROM artigos WHERE EXTRACT(MONTH FROM data) = $1 AND EXTRACT(YEAR FROM data) = $2;`,
+            text: `SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, titulo, imagem, conteudo FROM artigos WHERE EXTRACT(MONTH FROM data) = $1 AND EXTRACT(YEAR FROM data) = $2;`,
             values: [mes, ano]
         }
         const resultado = await pool.query(consulta);

@@ -4,7 +4,7 @@
         <div class="card mb-3">
             <div class="row g-0">
                 <div class="col-12 col-md-4 d-flex align-items-center" >
-                    <img src="{{this.imagem}}" alt="imagem cone hindu" class="img-fluid card-img-top">
+                    <img src="{{this.imagem}}" alt="imagem ilustrativa" class="img-fluid card-img-top">
                 </div>
                 <div class="col-md-8 ">
                     <div class="card-body">
@@ -23,6 +23,7 @@
         <aside>
             <h4 class="fst-italic">Arquivos</h4>
             <ol class="list-unstyled mb-0">
+                <li><a href="/blog">Todos os artigos</a></li>
                 {{#each listaData }}
                 <li><a href="/blog?mes={{this.mes}}&ano={{this.ano}}">
                 {{ getMes this.mes }} {{this.ano}}</a></li>                

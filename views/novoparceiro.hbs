@@ -3,27 +3,27 @@
 
         <div>
             <h1 class="pt-5">Parceiros</h1>
-            <form class="row mt-5 pb-5" action="/api/admin/parceiros">
+            <form class="row mt-5 pb-5">
                 <input type="hidden" name="id" id="id" {{#if parceiro}} value="{{parceiro.id}}" {{/if}}>
                 <div class="mb-3">
                     <label for="nome" class="form-label">Nome</label>
-                    <input type="text" class="form-control" id="nome" name="nome" required {{#if parceiro}} value="{{parceiro.nome}}" {{/if}}>
+                    <input type="text" class="form-control" id="nome" name="nome"  {{#if parceiro}} value="{{parceiro.nome}}" {{/if}}>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required {{#if parceiro}} value="{{parceiro.email}}" {{/if}}>
+                    <input type="email" class="form-control" id="email" name="email"  {{#if parceiro}} value="{{parceiro.email}}" {{/if}}>
                 </div>
                 <div class="mb-3">
                     <label for="telefone" class="form-label">Telefone</label>
-                    <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="DDD912345678" pattern="[0-9]{3}[0-9]{5}[0-9]{4}" required {{#if parceiro}} value="{{parceiro.telefone}}" {{/if}}>
+                    <input type="tel" class="form-control" id="telefone" name="telefone"  {{#if parceiro}} value="{{parceiro.telefone}}" {{/if}}>
                 </div>
                 <div class="mb-3">
                     <label for="endereco" class="form-label">Endereço</label>
-                    <input type="text" class="form-control" id="endereco" name="endereco" required {{#if parceiro}} value="{{parceiro.endereco}}" {{/if}}>
+                    <input type="text" class="form-control" id="endereco" name="endereco" {{#if parceiro}} value="{{parceiro.endereco}}" {{/if}} ="">
                 </div>
                 <div class="mb-3">
                     <label for="website" class="form-label">Website</label>
-                    <input type="text" class="form-control" id="website" name="website" required {{#if parceiro}} value="{{parceiro.website}}" {{/if}}>
+                    <input type="text" class="form-control" id="website" name="website"  {{#if parceiro}} value="{{parceiro.website}}" {{/if}}>
                 </div> 
                 {{#if parceiro }}
                 <div class="d-grid gap-2">
