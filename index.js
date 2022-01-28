@@ -8,7 +8,22 @@ const key = uuidv4().slice(30);
 
 var session = require('express-session');
 
-//consultas base de dados PostgreSQL
+//PostgreSQL
+const pg = require("pg");
+pg.types.setTypeParser(1082, (stringValue) => stringValue);
+
+const pool = new pg.Pool({
+    user: "postgres",
+    password: "senhapostgre",
+    host: "localhost",
+    port: 5432,
+    database: "appbel",
+});
+
+// consultas:
+const { Contato } = require("./contatos");
+
+//excluir:
 const { registrarMensagem, consultarMensagens, editarStatus, eliminarMensagem, verificarAdmin, consultarArtigos, criarArtigo, consultarArtigo, filtrarArtigos, listarDataArquivos,  editarArtigo, excluirArtigo, consultarParceiros, consultarParceiro, cadastrarParceiro, editarParceiro, excluirParceiro } = require("./consultas");
 
 //integrações:
@@ -121,8 +136,9 @@ app.get("/contato", async (req, res) => {
 
 app.post("/contato", async (req, res) => {
     try {
-        const { motivo, nome, telefone, email, mensagem } = req.body;        
-        await registrarMensagem(motivo, nome, telefone, email, mensagem);        
+        let { motivo, nome, telefone, email, mensagem } = req.body; 
+        let contato = new Contato(null, null, motivo, nome, telefone, email, mensagem, false, pool);      
+        await contato.registrar();        
         res.status(200);
         res.redirect("/contato");
     } catch (error) {

@@ -248,7 +248,7 @@ const excluirParceiro = async (id) => {
 
 
 module.exports = {
-    registrarMensagem,
+    //registrarMensagem,
     consultarMensagens,
     editarStatus,
     eliminarMensagem,
