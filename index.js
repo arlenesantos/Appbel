@@ -4,7 +4,7 @@ const app = express();
 const exphbs = require("express-handlebars");
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
-const key = uuidv4().slice(30);
+var key = uuidv4().slice(30);
 
 var session = require('express-session');
 
@@ -95,15 +95,15 @@ app.get("/", async (req, res) => {
 //filtrar e listar artigos por data:
 app.get("/blog", async (req, res) => {
     try {  
-        const listaData = await listarDataArquivos();
+        let listaData = await listarDataArquivos();
 
         if(req.url.includes('/blog?mes')){   
-            const { mes, ano } = req.query;                  
-            const artigosFiltrados = await filtrarArtigos( mes, ano);
+            let { mes, ano } = req.query;                  
+            let artigosFiltrados = await filtrarArtigos( mes, ano);
             res.render('blog', { artigos: artigosFiltrados , listaData: listaData});
 
         } else {
-            const artigos = await consultarArtigos();
+            let artigos = await consultarArtigos();
             res.render('blog', { artigos: artigos, listaData: listaData });
         }        
 
@@ -115,9 +115,9 @@ app.get("/blog", async (req, res) => {
 
 app.get("/blog/artigo", async (req, res) => {
     try {
-        const { id } = req.query;
+        let { id } = req.query;
         if (id) {
-            const artigo = await consultarArtigo(id, true);
+            let artigo = await consultarArtigo(id, true);
             res.render('blog-artigo', { artigo: artigo });
         }
     } catch (error) {
@@ -151,7 +151,7 @@ app.post("/contato", async (req, res) => {
 
 app.get("/parceiros", async (req, res) => {
     try {
-        const parceiros = await consultarParceiros();        
+        let parceiros = await consultarParceiros();        
         res.render('parceiros', { parceiros: parceiros });        
 
     } catch (error) {
@@ -219,8 +219,7 @@ app.get("/admin", async (req, res) => {
         if (req.session.logged_in) {
             res.render('admin-contatos', { layout: 'adm', logged: req.session.logged_in });
         } else {
-            res.status(200);
-            //res.render('login', { layout: 'adm' });
+            res.status(200);            
             res.render('login', { layout: false });
         }
     } catch (error) {
@@ -234,8 +233,8 @@ app.get("/admin", async (req, res) => {
 app.get("/admin/contatos", async (req, res) => {
     try {
         //validar session:
-        if (req.session.logged_in) {
-            const contatos = await consultarMensagens();
+        if (req.session.logged_in) { 
+            let contatos = await Contato.mostrar(pool);
             res.render('admin-contatos', { layout: 'adm', logged: req.session.logged_in, contatos: contatos });
         } else {
             res.status(200);
@@ -261,8 +260,10 @@ app.put("/api/admin/contatos", async (req, res) => {
                         code: 401
                     })
                 } else {
-                    const { id, status } = req.body;
-                    const contato = await editarStatus(id, status);
+                    let { id, status } = req.body;
+                    let contato = await Contato.consultar(id, pool);                    
+                    contato.setStatus(status);                                  
+                    await contato.atualizar();                    
                     res.status(200).type("json").send(contato);
                 }
             })
@@ -290,10 +291,10 @@ app.delete("/api/admin/contatos", async (req, res) => {
                         code: 401
                     })
                 } else {
-                    const { id } = req.body;
-                    const contatos = await eliminarMensagem(id);
-                    res.status(200).type("json").send(contatos);
-                    res.render("admin-contatos", { contatos });
+                    let { id } = req.body;
+                    let contato = await Contato.consultar(id, pool);
+                    await contato.excluir();
+                    res.status(200).type("json").send(contato);                    
                 }
             })
         } else {
@@ -312,7 +313,7 @@ app.delete("/api/admin/contatos", async (req, res) => {
 app.get("/admin/blog", async (req, res) => {
     try {
         if (req.session.logged_in) {
-            const artigos = await consultarArtigos();
+            let artigos = await consultarArtigos();
             res.render('admin-blog', { layout: 'adm', logged: req.session.logged_in, artigos: artigos });
         } else {
             res.status(200);
@@ -329,9 +330,9 @@ app.get("/admin/blog", async (req, res) => {
 app.get("/admin/artigo", async (req, res) => {
     try {
         if (req.session.logged_in) {
-            const { id } = req.query;
+            let { id } = req.query;
             if (id) {
-                const artigo = await consultarArtigo(id);
+                let artigo = await consultarArtigo(id);
                 res.render('admin-artigos', { layout: 'adm', logged: req.session.logged_in, artigo: artigo });
             } else {
                 res.render('admin-artigos', { layout: 'adm', logged: req.session.logged_in });
@@ -359,8 +360,8 @@ app.post("/api/admin/artigo", async (req, res) => {
                         code: 401
                     })
                 } else {
-                    const { data, titulo, imagem, conteudo } = req.body;
-                    const artigoNovo = await criarArtigo(data, titulo, imagem, conteudo);
+                    let { data, titulo, imagem, conteudo } = req.body;
+                    let artigoNovo = await criarArtigo(data, titulo, imagem, conteudo);
                     res.status(200).type("json").send({ 'artigo': artigoNovo, 'token': token });
                 }
             })
@@ -387,8 +388,8 @@ app.put("/api/admin/artigo", async (req, res) => {
                         code: 401
                     })
                 } else {
-                    const { id, data, titulo, imagem, conteudo } = req.body;
-                    const artigoEditado = await editarArtigo(id, data, titulo, imagem, conteudo);
+                    let { id, data, titulo, imagem, conteudo } = req.body;
+                    let artigoEditado = await editarArtigo(id, data, titulo, imagem, conteudo);
                     //envia codigo 200 para entrar no then da promessa - (artigos.hbs) e então roda alert e location.href
                     res.status(200).type("json").send({ 'artigo': artigoEditado, 'token': token });
                 }
@@ -417,8 +418,8 @@ app.delete("/api/admin/artigo", async (req, res) => {
                         code: 401
                     })
                 } else {
-                    const { id } = req.body;
-                    const artigoExcluido = await excluirArtigo(id);
+                    let { id } = req.body;
+                    let artigoExcluido = await excluirArtigo(id);
                     res.status(200).type("json").send({ 'artigo': artigoExcluido, 'token': token });
                 }
             })
@@ -438,7 +439,7 @@ app.delete("/api/admin/artigo", async (req, res) => {
 app.get("/admin/parceiros", async (req, res) => {
     try {
         if (req.session.logged_in) {            
-            const parceiros = await consultarParceiros();
+            let parceiros = await consultarParceiros();
             res.render('admin-parceiros', { layout: 'adm', logged: req.session.logged_in, parceiros: parceiros });
         } else {
             res.status(200);
@@ -455,9 +456,9 @@ app.get("/admin/parceiros", async (req, res) => {
 app.get("/admin/parceiro", async (req, res) => {
     try {
         if (req.session.logged_in) {
-            const { id } = req.query;
+            let { id } = req.query;
             if (id) {
-                const parceiro = await consultarParceiro(id);
+                let parceiro = await consultarParceiro(id);
                 res.render('novoparceiro', { layout: 'adm', logged: req.session.logged_in, parceiro: parceiro });
             } else {
                 res.render('novoparceiro', { layout: 'adm', logged: req.session.logged_in });
@@ -486,8 +487,8 @@ app.post("/api/admin/parceiros", async (req, res) => {
                         code: 401
                     })
                 } else {
-                    const { nome, email, telefone, endereco, website } = req.body;
-                    const novoParceiro = await cadastrarParceiro(nome, email, telefone, endereco, website);
+                    let { nome, email, telefone, endereco, website } = req.body;
+                    let novoParceiro = await cadastrarParceiro(nome, email, telefone, endereco, website);
                     res.status(200).type("json").send({ 'parceiro': novoParceiro, 'token': token });
                 }
             })
@@ -514,8 +515,8 @@ app.put("/api/admin/parceiros", async (req, res) => {
                         code: 401
                     })
                 } else {
-                    const { id, nome, email, telefone, endereco, website} = req.body;
-                    const parceiroEditado = await editarParceiro(id, nome, email, telefone, endereco, website);                    
+                    let { id, nome, email, telefone, endereco, website} = req.body;
+                    let parceiroEditado = await editarParceiro(id, nome, email, telefone, endereco, website);                    
                     res.status(200).type("json").send({ 'parceiro': parceiroEditado, 'token': token });
                 }
             })
@@ -543,8 +544,8 @@ app.delete("/api/admin/parceiros", async (req, res) => {
                         code: 401
                     })
                 } else {
-                    const { id } = req.body;
-                    const parceiroExcluido = await excluirParceiro(id);
+                    let { id } = req.body;
+                    let parceiroExcluido = await excluirParceiro(id);
                     res.status(200).type("json").send({ 'parceiro': parceiroExcluido, 'token': token });
                 }
             })

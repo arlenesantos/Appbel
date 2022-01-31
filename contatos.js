@@ -32,15 +32,38 @@ class Contato {
             try {
                 let resultado = await _pool.query(consulta);
                 return resultado.rows[0];
-                
+
             } catch (error) {
                 console.log(error);
             }
+        };
 
-
-        } 
-
+        this.atualizar = async () =>{
+            const consulta = {
+                text: `UPDATE contatos SET data = $2, motivo_contato = $3, nome = $4, telefone = $5, email = $6, mensagem = $7, status = $8 WHERE id = $1 RETURNING *;`,
+                values: [_id, _data, _motivo, _nome, _telefone, _email, _mensagem, _status],
+            };
+            try {
+                const resultado = await pool.query(consulta);
+                return resultado.rows[0];
         
+            } catch (error) {
+                return error;
+            }
+        };
+
+        this.excluir = async () => {
+            const consulta = {
+                text: "DELETE FROM contatos WHERE id = $1 RETURNING *;",
+                values: [_id],
+            };
+            try {
+                const resultado = await pool.query(consulta);
+                return resultado.rows[0];
+            } catch (error) {
+                throw error;
+            }
+        }  
     }
 
     get id(){
@@ -71,14 +94,43 @@ class Contato {
         return this.getPool();
     }
 
+    static async consultar(id, pool){
+        let consulta = {
+            text: `SELECT id, data, motivo_contato, nome, telefone, email, mensagem, status FROM contatos WHERE id = $1;`,
+            values: [id]
+        }    
+        try {
+            let resultado = await pool.query(consulta);
+            let contato =  resultado.rows[0];
+            return new Contato(contato.id, contato.data, contato.motivo_contato, contato.nome, contato.telefone, contato.email, contato.mensagem, contato.status, pool);
+    
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async registrar(){
         return this.registrar();   
-    }    
+    }
+    
+    static async mostrar(pool){
+        try {
+            let resultado = await pool.query(`SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, motivo_contato, nome, telefone, email, mensagem, status FROM contatos`);
+            return resultado.rows;
+        } catch (error) {
+            return error;
+        }        
+    }
 
-        
+    async atualizar(){
+        return this.atualizar();
+    }
+
+    async excluir(){
+        return this.excluir();
+    }
         
 }
 
-//export default Contato;
+
 module.exports = { Contato };
-//export default { Contato }

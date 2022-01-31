@@ -14,56 +14,10 @@ const pool = new pg.Pool({
 });
 
 
-const registrarMensagem = async (motivo, nome, telefone, email, mensagem) => {
-    const consulta = {
-        text: "INSERT INTO contatos (motivo_contato, nome, telefone, email, mensagem, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;",
-        values: [motivo, nome, telefone, email, mensagem, false],
-    };
-    try {
-        const resultado = await pool.query(consulta);
-        return resultado.rows[0];
-
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-const consultarMensagens = async () => {
-    try {
-        const resultado = await pool.query(`SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, motivo_contato, nome, telefone, email, mensagem, status FROM contatos`);
-        return resultado.rows;
-    } catch (error) {
-        return error;
-    }
-};
-
-const editarStatus = async (id, status) => {
-    const consulta = {
-        text: "UPDATE contatos SET status = $2 WHERE id = $1 RETURNING *;",
-        values: [id, status],
-    };
-    try {
-        const resultado = await pool.query(consulta);
-        return resultado.rows[0];
-
-    } catch (error) {
-        return error;
-    }
-};
 
 
-const eliminarMensagem = async (id) => {
-    const consulta = {
-        text: "DELETE FROM contatos WHERE id = $1 RETURNING *;",
-        values: [id],
-    };
-    try {
-        const resultado = await pool.query(consulta);
-        return resultado.rows[0];
-    } catch (error) {
-        throw error;
-    }
-};
+
+
 
 const verificarAdmin = async (email, senha) => {
     const consulta = {
@@ -248,10 +202,8 @@ const excluirParceiro = async (id) => {
 
 
 module.exports = {
-    //registrarMensagem,
-    consultarMensagens,
-    editarStatus,
-    eliminarMensagem,
+    
+  
     verificarAdmin,
     consultarArtigos,
     criarArtigo,
