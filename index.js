@@ -2,13 +2,16 @@
 const express = require("express");
 const app = express();
 const exphbs = require("express-handlebars");
+const Handlebars = require('handlebars');
+//permite acessar metodos e propriedades de objetos:
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 var key = uuidv4().slice(30);
 
 var session = require('express-session');
 
-//PostgreSQL
+//PostgreSQL - formatação de datas - configuração na base de dados de pg:
 const pg = require("pg");
 pg.types.setTypeParser(1082, (stringValue) => stringValue);
 
@@ -22,6 +25,7 @@ const pool = new pg.Pool({
 
 // consultas:
 const { Contato } = require("./contatos");
+const { Artigo } = require("./artigos");
 
 //excluir:
 const { registrarMensagem, consultarMensagens, editarStatus, eliminarMensagem, verificarAdmin, consultarArtigos, criarArtigo, consultarArtigo, filtrarArtigos, listarDataArquivos,  editarArtigo, excluirArtigo, consultarParceiros, consultarParceiro, cadastrarParceiro, editarParceiro, excluirParceiro } = require("./consultas");
@@ -29,10 +33,11 @@ const { registrarMensagem, consultarMensagens, editarStatus, eliminarMensagem, v
 //integrações:
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.set("view engine", "hbs");
+
 app.engine(
     "hbs",
     exphbs({
+        handlebars: allowInsecurePrototypeAccess(Handlebars),
         defaultLayout: "main",
         layoutsDir: `${__dirname}/views/main`,
         //partialsDir: `${__dirname}/views`,
@@ -64,6 +69,7 @@ app.engine(
         }
     })
 );
+app.set("view engine", "hbs");
 
 app.use(session({
     secret: 'keyboard cat',
@@ -95,15 +101,15 @@ app.get("/", async (req, res) => {
 //filtrar e listar artigos por data:
 app.get("/blog", async (req, res) => {
     try {  
-        let listaData = await listarDataArquivos();
-
+        let listaData = await Artigo.listarData(pool);
+        
         if(req.url.includes('/blog?mes')){   
             let { mes, ano } = req.query;                  
-            let artigosFiltrados = await filtrarArtigos( mes, ano);
+            let artigosFiltrados = await Artigo.filtrarMes( mes, ano, pool);
             res.render('blog', { artigos: artigosFiltrados , listaData: listaData});
 
         } else {
-            let artigos = await consultarArtigos();
+            let artigos = await Artigo.mostrar(pool);
             res.render('blog', { artigos: artigos, listaData: listaData });
         }        
 
@@ -117,7 +123,7 @@ app.get("/blog/artigo", async (req, res) => {
     try {
         let { id } = req.query;
         if (id) {
-            let artigo = await consultarArtigo(id, true);
+            let artigo = await Artigo.consultar(id, true, pool);
             res.render('blog-artigo', { artigo: artigo });
         }
     } catch (error) {
@@ -313,7 +319,7 @@ app.delete("/api/admin/contatos", async (req, res) => {
 app.get("/admin/blog", async (req, res) => {
     try {
         if (req.session.logged_in) {
-            let artigos = await consultarArtigos();
+            let artigos = await Artigo.mostrar(pool);
             res.render('admin-blog', { layout: 'adm', logged: req.session.logged_in, artigos: artigos });
         } else {
             res.status(200);
@@ -332,7 +338,7 @@ app.get("/admin/artigo", async (req, res) => {
         if (req.session.logged_in) {
             let { id } = req.query;
             if (id) {
-                let artigo = await consultarArtigo(id);
+                let artigo = await Artigo.consultar(id, false, pool)
                 res.render('admin-artigos', { layout: 'adm', logged: req.session.logged_in, artigo: artigo });
             } else {
                 res.render('admin-artigos', { layout: 'adm', logged: req.session.logged_in });
@@ -361,7 +367,8 @@ app.post("/api/admin/artigo", async (req, res) => {
                     })
                 } else {
                     let { data, titulo, imagem, conteudo } = req.body;
-                    let artigoNovo = await criarArtigo(data, titulo, imagem, conteudo);
+                    let artigoNovo = new Artigo(null, data, titulo, imagem, conteudo, pool);
+                    await artigoNovo.registrar();
                     res.status(200).type("json").send({ 'artigo': artigoNovo, 'token': token });
                 }
             })
@@ -389,8 +396,12 @@ app.put("/api/admin/artigo", async (req, res) => {
                     })
                 } else {
                     let { id, data, titulo, imagem, conteudo } = req.body;
-                    let artigoEditado = await editarArtigo(id, data, titulo, imagem, conteudo);
-                    //envia codigo 200 para entrar no then da promessa - (artigos.hbs) e então roda alert e location.href
+                    let artigoEditado = await Artigo.consultar(id, false, pool);
+                    artigoEditado.setData(data);
+                    artigoEditado.setTitulo(titulo);
+                    artigoEditado.setImagem(imagem);
+                    artigoEditado.setConteudo(conteudo);                    
+                    artigoEditado.atualizar();
                     res.status(200).type("json").send({ 'artigo': artigoEditado, 'token': token });
                 }
             })
@@ -419,7 +430,8 @@ app.delete("/api/admin/artigo", async (req, res) => {
                     })
                 } else {
                     let { id } = req.body;
-                    let artigoExcluido = await excluirArtigo(id);
+                    let artigoExcluido = await Artigo.consultar(id, false, pool);
+                    await artigoExcluido.excluir();
                     res.status(200).type("json").send({ 'artigo': artigoExcluido, 'token': token });
                 }
             })

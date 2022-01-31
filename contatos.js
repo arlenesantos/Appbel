@@ -94,6 +94,15 @@ class Contato {
         return this.getPool();
     }
 
+    static async mostrar(pool){
+        try {
+            let resultado = await pool.query(`SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, motivo_contato, nome, telefone, email, mensagem, status FROM contatos`);
+            return resultado.rows;
+        } catch (error) {
+            return error;
+        }        
+    }
+
     static async consultar(id, pool){
         let consulta = {
             text: `SELECT id, data, motivo_contato, nome, telefone, email, mensagem, status FROM contatos WHERE id = $1;`,
@@ -111,17 +120,8 @@ class Contato {
 
     async registrar(){
         return this.registrar();   
-    }
+    }    
     
-    static async mostrar(pool){
-        try {
-            let resultado = await pool.query(`SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, motivo_contato, nome, telefone, email, mensagem, status FROM contatos`);
-            return resultado.rows;
-        } catch (error) {
-            return error;
-        }        
-    }
-
     async atualizar(){
         return this.atualizar();
     }

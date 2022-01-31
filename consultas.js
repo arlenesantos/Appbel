@@ -33,104 +33,6 @@ const verificarAdmin = async (email, senha) => {
     }
 };
 
-//admin/blog:
-
-const consultarArtigos = async () => {
-    try {
-        const resultado = await pool.query(`SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, titulo, imagem, conteudo FROM artigos;`);
-        return resultado.rows;
-
-    } catch (error) {
-        throw error;
-    }
-};
-
-const criarArtigo = async (data, titulo, imagem, conteudo) => {
-    const consulta = {
-        text: `INSERT INTO artigos (data, titulo, imagem, conteudo) VALUES ($1, $2, $3, $4) RETURNING *;`,
-        values: [data, titulo, imagem, conteudo]
-    }
-    try {
-        const resultado = await pool.query(consulta);
-        return resultado.rows[0];
-
-    } catch (error) {
-        throw error;
-    }
-}
-
-const consultarArtigo = async (id, dataPtBR = false) => {
-    const query = dataPtBR
-        ? `SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, titulo, imagem, conteudo FROM artigos WHERE id = $1;`
-        : `SELECT id, data, titulo, imagem, conteudo 
-            FROM artigos WHERE id = $1;`;
-
-    try {
-        const consulta = {
-            text: query,
-            values: [id]
-        }
-        const resultado = await pool.query(consulta);
-        return resultado.rows[0];
-
-    } catch (error) {
-        throw error;
-    }
-};
-
-//filtrar artigo por mês para página do blog:
-const filtrarArtigos = async (mes, ano) => { 
-    try {
-        const consulta = {
-            text: `SELECT id, TO_CHAR(data, 'dd/mm/yyyy') as data, titulo, imagem, conteudo FROM artigos WHERE EXTRACT(MONTH FROM data) = $1 AND EXTRACT(YEAR FROM data) = $2;`,
-            values: [mes, ano]
-        }
-        const resultado = await pool.query(consulta);
-        return resultado.rows;
-
-    } catch (error) {
-        throw error;
-    }
-};
-
-//listar data para coluna arquivos:
-const listarDataArquivos = async () => {
-    try {       
-        const resultado = await pool.query(`SELECT DISTINCT EXTRACT(MONTH FROM data) AS mes, EXTRACT(YEAR FROM data) AS ano FROM artigos;`);
-        return resultado.rows;
-        
-    } catch (error) {
-        throw error;
-    }
-};
-
-const editarArtigo = async (id, data, titulo, imagem, conteudo) => {
-    const consulta = {
-        text: `UPDATE artigos SET data = $2, titulo = $3, imagem = $4, conteudo = $5 WHERE id = $1 RETURNING *;`,
-        values: [id, data, titulo, imagem, conteudo]
-    }
-    try {
-        const resultado = await pool.query(consulta);
-        return resultado.rows[0];
-
-    } catch (error) {
-        throw error;
-    }
-};
-
-const excluirArtigo = async (id) => {
-    const consulta = {
-        text: "DELETE FROM artigos WHERE id = $1 RETURNING *;",
-        values: [id],
-    };
-    try {
-        const resultado = await pool.query(consulta);
-        return resultado.rows[0];
-    } catch (error) {
-        throw error;
-    }
-};
-
 //admin/parceiros:
 
 const consultarParceiros = async () => {
@@ -205,13 +107,7 @@ module.exports = {
     
   
     verificarAdmin,
-    consultarArtigos,
-    criarArtigo,
-    consultarArtigo,
-    filtrarArtigos,
-    listarDataArquivos,
-    editarArtigo,
-    excluirArtigo,
+       
     consultarParceiros,
     consultarParceiro,
     cadastrarParceiro,
