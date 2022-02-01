@@ -18,21 +18,6 @@ const pool = new pg.Pool({
 
 
 
-
-const verificarAdmin = async (email, senha) => {
-    const consulta = {
-        text: `SELECT email FROM admin WHERE email = $1 AND senha = $2;`,
-        values: [email, senha],
-    };
-    try {
-        const resultado = await pool.query(consulta);
-        return resultado.rows[0];
-    } catch (error) {
-        console.log(error);
-        return false;
-    }
-};
-
 //admin/parceiros:
 
 const consultarParceiros = async () => {
@@ -106,12 +91,6 @@ const excluirParceiro = async (id) => {
 module.exports = {
     
   
-   
-       
-    consultarParceiros,
-    consultarParceiro,
-    cadastrarParceiro,
-    editarParceiro,
-    excluirParceiro,
+
 
 }

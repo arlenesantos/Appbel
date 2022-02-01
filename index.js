@@ -27,6 +27,7 @@ const pool = new pg.Pool({
 const { Contato } = require("./contatos");
 const { Artigo } = require("./artigos");
 const { Login } = require("./login");
+const { Parceiro } = require("./parceiros");
 
 //excluir:
 const { registrarMensagem, consultarMensagens, editarStatus, eliminarMensagem, verificarAdmin, consultarArtigos, criarArtigo, consultarArtigo, filtrarArtigos, listarDataArquivos,  editarArtigo, excluirArtigo, consultarParceiros, consultarParceiro, cadastrarParceiro, editarParceiro, excluirParceiro } = require("./consultas");
@@ -158,7 +159,7 @@ app.post("/contato", async (req, res) => {
 
 app.get("/parceiros", async (req, res) => {
     try {
-        let parceiros = await consultarParceiros();        
+        let parceiros = await Parceiro.mostrar(pool);        
         res.render('parceiros', { parceiros: parceiros });        
 
     } catch (error) {
@@ -451,7 +452,7 @@ app.delete("/api/admin/artigo", async (req, res) => {
 app.get("/admin/parceiros", async (req, res) => {
     try {
         if (req.session.logged_in) {            
-            let parceiros = await consultarParceiros();
+            let parceiros = await Parceiro.mostrar(pool);
             res.render('admin-parceiros', { layout: 'adm', logged: req.session.logged_in, parceiros: parceiros });
         } else {
             res.status(200);
@@ -470,7 +471,7 @@ app.get("/admin/parceiro", async (req, res) => {
         if (req.session.logged_in) {
             let { id } = req.query;
             if (id) {
-                let parceiro = await consultarParceiro(id);
+                let parceiro = await Parceiro.consultar(id, pool);
                 res.render('novoparceiro', { layout: 'adm', logged: req.session.logged_in, parceiro: parceiro });
             } else {
                 res.render('novoparceiro', { layout: 'adm', logged: req.session.logged_in });
@@ -500,7 +501,8 @@ app.post("/api/admin/parceiros", async (req, res) => {
                     })
                 } else {
                     let { nome, email, telefone, endereco, website } = req.body;
-                    let novoParceiro = await cadastrarParceiro(nome, email, telefone, endereco, website);
+                    let novoParceiro = new Parceiro(null, nome, email, telefone, endereco, website, pool );
+                    await novoParceiro.cadastrar();
                     res.status(200).type("json").send({ 'parceiro': novoParceiro, 'token': token });
                 }
             })
@@ -528,7 +530,13 @@ app.put("/api/admin/parceiros", async (req, res) => {
                     })
                 } else {
                     let { id, nome, email, telefone, endereco, website} = req.body;
-                    let parceiroEditado = await editarParceiro(id, nome, email, telefone, endereco, website);                    
+                    let parceiroEditado = await Parceiro.consultar(id, pool);
+                    parceiroEditado.setNome(nome);
+                    parceiroEditado.setEmail(email);
+                    parceiroEditado.setTelefone(telefone);
+                    parceiroEditado.setEndereco(endereco);
+                    parceiroEditado.setWebsite(website);
+                    await parceiroEditado.atualizar();                  
                     res.status(200).type("json").send({ 'parceiro': parceiroEditado, 'token': token });
                 }
             })
@@ -557,7 +565,8 @@ app.delete("/api/admin/parceiros", async (req, res) => {
                     })
                 } else {
                     let { id } = req.body;
-                    let parceiroExcluido = await excluirParceiro(id);
+                    let parceiroExcluido = await Parceiro.consultar(id, pool);
+                    await parceiroExcluido.excluir();
                     res.status(200).type("json").send({ 'parceiro': parceiroExcluido, 'token': token });
                 }
             })
