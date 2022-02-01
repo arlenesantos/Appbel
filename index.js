@@ -26,6 +26,7 @@ const pool = new pg.Pool({
 // consultas:
 const { Contato } = require("./contatos");
 const { Artigo } = require("./artigos");
+const { Login } = require("./login");
 
 //excluir:
 const { registrarMensagem, consultarMensagens, editarStatus, eliminarMensagem, verificarAdmin, consultarArtigos, criarArtigo, consultarArtigo, filtrarArtigos, listarDataArquivos,  editarArtigo, excluirArtigo, consultarParceiros, consultarParceiro, cadastrarParceiro, editarParceiro, excluirParceiro } = require("./consultas");
@@ -168,7 +169,6 @@ app.get("/parceiros", async (req, res) => {
 // sistema de login
 app.get("/login", async (req, res) => {
     try {
-        //res.render('login', { layout: 'adm' });
         res.render('login', { layout: false });
        
 
@@ -184,7 +184,7 @@ app.get("/login", async (req, res) => {
 //post pq é processamento de formulario, metodo post para não mostrar dados na url
 app.post("/login", async (req, res) => {
     let { email, senha } = req.body;
-    let admin = await verificarAdmin(email, senha);
+    let admin = await Login.verificar(email, senha, pool);
     if (admin) {
         if (admin.email) {
             const token = jwt.sign(

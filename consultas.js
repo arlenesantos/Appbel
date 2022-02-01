@@ -106,7 +106,7 @@ const excluirParceiro = async (id) => {
 module.exports = {
     
   
-    verificarAdmin,
+   
        
     consultarParceiros,
     consultarParceiro,
