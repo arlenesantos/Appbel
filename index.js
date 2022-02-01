@@ -2,15 +2,13 @@
 const express = require("express");
 const app = express();
 const exphbs = require("express-handlebars");
-const Handlebars = require('handlebars');
-//permite acessar metodos e propriedades de objetos:
-const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
 const jwt = require("jsonwebtoken");
 const { v4: uuidv4 } = require("uuid");
 var key = uuidv4().slice(30);
-
 var session = require('express-session');
-
+//permite acessar metodos e propriedades de objetos:
+const Handlebars = require('handlebars');
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
 //PostgreSQL - formatação de datas - configuração na base de dados de pg:
 const pg = require("pg");
 pg.types.setTypeParser(1082, (stringValue) => stringValue);
@@ -23,14 +21,12 @@ const pool = new pg.Pool({
     database: "appbel",
 });
 
-// consultas:
-const { Contato } = require("./contatos");
-const { Artigo } = require("./artigos");
-const { Login } = require("./login");
-const { Parceiro } = require("./parceiros");
+//classes e consultas:
+const { Contato } = require("./classes/contatos");
+const { Artigo } = require("./classes/artigos");
+const { Login } = require("./classes/login");
+const { Parceiro } = require("./classes/parceiros");
 
-//excluir:
-const { registrarMensagem, consultarMensagens, editarStatus, eliminarMensagem, verificarAdmin, consultarArtigos, criarArtigo, consultarArtigo, filtrarArtigos, listarDataArquivos,  editarArtigo, excluirArtigo, consultarParceiros, consultarParceiro, cadastrarParceiro, editarParceiro, excluirParceiro } = require("./consultas");
 
 //integrações:
 app.use(express.urlencoded({ extended: false }));
@@ -74,7 +70,7 @@ app.engine(
 app.set("view engine", "hbs");
 
 app.use(session({
-    secret: 'keyboard cat',
+    secret: 'key',
     resave: false,
     saveUninitialized: true,
     cookie: {}
