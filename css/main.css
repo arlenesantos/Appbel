@@ -276,7 +276,8 @@ img {
 
 /* CONTATO */
 
-.contato-container h1 {
+.contato-session h1,
+.contato-container {
     text-align: center;
     margin-top: 100px;
 }
